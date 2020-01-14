@@ -18,6 +18,8 @@ from pgu import engine
 from cnst import *
 import data
 
+import agent
+
 class Input:
     def __init__(self):
         self.up = False
@@ -43,7 +45,7 @@ class Game(engine.Game):
     def init_play(self):
         self.score = 0
         self.high = 0
-        self.lives = 2
+        self.lives = 99
         self.coins = 0
         self.powerup = False
         
@@ -59,7 +61,7 @@ class Game(engine.Game):
 
         sw,sh = SW,SH
         if self.scale2x: sw,sh = sw*2,sh*2
-        mode = FULLSCREEN
+        mode = RESIZABLE #MYCODE
         if '-full' in sys.argv:
             mode ^= FULLSCREEN
         self.screen = pygame.display.set_mode((sw,sh),mode)
@@ -96,7 +98,7 @@ class Game(engine.Game):
         self.fonts['pause'] = pygame.font.Font(data.filepath(os.path.join('fonts','LESSERCO.ttf')),36)
         
         import level
-        level.pre_load()
+        level.pre_load() #MYCOMMENT
         
         try:
             
@@ -284,11 +286,14 @@ def main():
             
     g = Game()
     g.init()
+
     import menu
     l = l2 = menu.Menu(g)
     #l = menu.Intro(g,l2)
     if fname != None:
         import level
-        l = level.Level(g,fname,engine.Quit(g))
+        l = level.Level(g,fname,engine.Quit(g)) #MYCOMMENT CAN COMMENT THIS AND PLAY GAME LIKE NORMAL
+
+    a = agent.Agent(g) #TODO
         
-    g.run(l)
+    g.run(l) #MYCOMMENT game run menu
