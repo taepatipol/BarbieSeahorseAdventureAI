@@ -296,4 +296,5 @@ def main():
 
     a = agent.Agent(g) #TODO
         
-    g.run(l) #MYCOMMENT game run menu
+    g.run(l)#MYCOMMENT game run menu  !! l is the g.state
+    print("stop running")

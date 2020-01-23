@@ -81,7 +81,7 @@ class Level:
     def init(self):
         #self._tiles = load_tiles(data.filepath('tiles.tga'))
         self._tiles = Level._tiles
-        fname = self.fname
+        fname = self.fname # MYNOTE by default fname = none
         if fname == None:
             fname,self.title = levels.LEVELS[self.game.lcur]
             fname = data.filepath(os.path.join('levels',fname))

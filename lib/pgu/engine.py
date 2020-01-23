@@ -82,7 +82,7 @@ class Game:
     """Template Class - The state engine.
     """
 
-    def fnc(self, f, v=None): #MYNOTE use to run function f of self with v attr
+    def fnc(self, f, v=None): #MYNOTE use to run function f of self.state with v attr
         s = self.state
         if not hasattr(s, f): return 0
         f = getattr(s, f)
@@ -91,7 +91,7 @@ class Game:
             r = f(v)
         else:
             r = f()
-        if r != None:
+        if r != None: #MYNOTE change state to result
             self.state = r
             self.state._paint = 1
             return 1
