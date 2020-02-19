@@ -29,6 +29,7 @@ def init(g,r):
     s.prev = pygame.Rect(s.rect)
     
     g.game.sfx['capsule'].play()
+    s.type = 'capsule'
 
     return s
 

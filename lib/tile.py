@@ -5,7 +5,7 @@ from cnst import *
 
 import sprite
         
-def t_init(g,r,n,hit_groups,hit,*params):
+def t_init(g,r,n,hit_groups,hit,*params): #MYNOTE t_init(g,pygame.Rect(x*TW,y*TH,TW,TH),n,[],None)
     t = sprite.Sprite(r,n)
     for grp in hit_groups: t.hit_groups.add(grp)
     def _hit(g,a,b):
@@ -15,7 +15,7 @@ def t_init(g,r,n,hit_groups,hit,*params):
     if len(params) > 0:
         t.standable = params[0]
     g.layer[r.centery/TH][r.centerx/TW] = t
-    return t
+    return t #MYNOTE add the sprite into game.layer
 
 # tile that takes up half the space it normally would, and is on the left side
 def tl_init(g,r,n,hit_groups,hit,*params):

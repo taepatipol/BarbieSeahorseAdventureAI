@@ -11,6 +11,7 @@ import tiles
 import codes
 import menu
 import levels
+import agentConnect
 
 def load_level(fname):
     img = pygame.image.load(fname)
@@ -83,27 +84,28 @@ class Level:
         self._tiles = Level._tiles
         fname = self.fname # MYNOTE by default fname = none
         if fname == None:
-            fname,self.title = levels.LEVELS[self.game.lcur]
+            fname,self.title = levels.LEVELS[self.game.lcur] #MYNOTE at start lcur of game = 0 !! fname = filename
             fname = data.filepath(os.path.join('levels',fname))
         else:
             self.title = os.path.basename(self.fname)
-        self.data = load_level(fname)
-        
+        self.data = load_level(fname) #load_level of level file to self.data the file is .tga
+        #MYNOTE self.data is the rgb value of map
+
         #self.images = load_images(data.filepath('images'))
         self.images = Level._images
         img = pygame.Surface((1,1)).convert_alpha()
-        img.fill((0,0,0,0))
+        img.fill((0,0,0,0)) #MYNOTE create img that is a 1*1 of black
         self.images[None] = img
         for n in xrange(0,len(self._tiles)): self.images[n] = self._tiles[n]
         
         import tiles
         self._images = []
-        for m in xrange(0,IROTATE):
+        for m in xrange(0,IROTATE): #MYNOTE IROTATE = fixed 64
             r = dict(self.images)
             #for n,i,t in tiles.TANIMATE:
                 #n2 = n+(m/t)%i
                 #r[n] = self.images[n2]
-            for n,incs in tiles.TANIMATE:
+            for n,incs in tiles.TANIMATE: #MYNOTE TANIMATE = list for animating an obj
                 n2 = n+incs[m%len(incs)]
                 r[n] = self.images[n2]
             for n1,n2 in tiles.TREPLACE:
@@ -116,7 +118,7 @@ class Level:
         self.set_bkgr('1.png')
         self.bkgr_scroll = pygame.Rect(0,0,1,1)
         
-        self.view = pygame.Rect(0,0,SW,SH)
+        self.view = pygame.Rect(0,0,SW,SH) #MYNOTE the screen?
         self.bounds = pygame.Rect(0,0,self.size[0]*TW,self.size[1]*TH)
         
         self.sprites = []
@@ -128,29 +130,32 @@ class Level:
         self.layer = [[None for x in xrange(0,self.size[0])] for y in xrange(0,self.size[1])]
          
         for y in xrange(0,self.size[1]):
-            l = self.data[0][y]
+            l = self.data[0][y] #MYNOTE data of color r
             for x in xrange(0,self.size[0]):
-                n = l[x]
+                n = l[x] #MYNOTE n is a tile in data matrix
                 #n1 = self.data[1][y][x]
                 #if n1:
                     #print 'warning place background tiles in the foreground',x,y,n1
                     #if n == 0: n = n1
                 if not n: continue
-                tiles.t_put(self,(x,y),n)
+                tiles.t_put(self,(x,y),n) #MYNOTE put tile into game.layer
+        #MYNOTE if comment this the floor will disappear but character is exist
         
         for y in xrange(0,self.size[1]):
-            l = self.data[2][y]
+            l = self.data[2][y] #MYNOTE data of color b
             for x in xrange(0,self.size[0]):
                 n = l[x]
                 if not n: continue
-                codes.c_init(self,(x,y),n)
-                
+                codes.c_init(self,(x,y),n) #init player and boss
+        #MYNOTE print(self.layer) may be the tiles in the screen
+        #print(self.layer)
+
         #just do a loop, just to get things all shined up ..
         self.status = None
         self.loop()
         self.status = '_first'
         self.player.image = None
-        self.player.exploded = 30
+        self.player.exploded = 30 # time when player appear effect
                 
     def set_bkgr(self,fname):
         if self._bkgr_fname == fname:
@@ -166,8 +171,9 @@ class Level:
             for x in xrange(r.left/TW,r.right/TW):
                 if x < 0 or x >= self.size[0]: continue 
                 if (x,y) not in self.codes:
-                    n = self.data[2][y][x]
+                    n = self.data[2][y][x] # MYNOTE g value of level file
                     if n == 0: continue
+                    #if n not in [0x60, 0x61, 0x62, 0x78, 0x30, 0x31, 0x32, 0x33]: continue # only door hack
                     s = codes.c_run(self,(x,y),n)
                     if s == None: continue
                     s._code = (x,y)
@@ -273,19 +279,22 @@ class Level:
     
     def loop(self):
         #record the high scores
+        #print('level loop')
+        #print(self.view)
         self.game.high = max(self.game.high,self.game.score)
         
         if self.status != '_first':
             # start up some new sprites ...
             r = self.get_border(INIT_BORDER)
-            self.run_codes(pygame.Rect(r.x,r.y,r.w,TH)) #top
+            self.run_codes(pygame.Rect(r.x,r.y,r.w,TH)) #top #MYNOTE this is where init normal enemy?
             self.run_codes(pygame.Rect(r.right-TW,r.y,TW,r.h)) #right
             self.run_codes(pygame.Rect(r.x,r.bottom-TH,r.w,TH)) #bottom
             self.run_codes(pygame.Rect(r.x,r.y,TW,r.h)) #left
             
             # grab the current existing sprites
             # doing this avoids a few odd situations 
-            sprites = self.sprites[:]
+            sprites = self.sprites[:] #MYNOTE first time self.sprites = []?? may be tile_to_sprite when print sprites it is living things
+            #print(sprites)
             
             # mark off the previous rect
             for s in sprites:
@@ -347,7 +356,25 @@ class Level:
             #pan the screen
             if self.player != None:
                 self.player.pan(self,self.player)
-            
+
+        # printing sprites rect position MYCODE
+        spritesData = []
+        for s in self.sprites:
+            spriteData = [s.rect.centerx, s.rect.centery]
+            if hasattr(s,'type'):
+                spriteData.append(s.type)
+            spritesData.append(spriteData)
+
+
+        # printing tiles position? may be
+        tilesData = []
+        for l in self.layer:
+            for t in l:
+                if t is not None:
+                    tileData = [t.rect.centerx, t.rect.centery]
+                # tilesData.append(tileData)
+        agentConnect.dataToInput(tilesData, spritesData)
+
         # more frames
         self.frame += 1
         if (self.frame%FPS)==0:

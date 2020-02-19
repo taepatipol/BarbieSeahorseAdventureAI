@@ -31,6 +31,7 @@ def init(g,r,n,facing,*params):
     s.strength = 6
     
     s.standing = None
+    s.type = 'brobo'
     return s
     
 def loop(g,s):

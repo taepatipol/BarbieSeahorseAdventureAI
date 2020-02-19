@@ -41,6 +41,7 @@ def init(g,r,n,vx,vy):
     
     s._prev = None
     s.carrying = []
+    s.type = 'platform'
     
     return s
     

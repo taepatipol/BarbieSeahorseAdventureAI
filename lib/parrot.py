@@ -29,6 +29,7 @@ def init(g,r,n,vx,*params):
     s.strength = 3
 
     #s.standing = None
+    s.type = 'parrot'
     return s
     
 def loop(g,s):

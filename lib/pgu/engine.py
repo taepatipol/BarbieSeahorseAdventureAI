@@ -120,7 +120,7 @@ class Game:
             self.loop()
 
     def loop(self):
-        s = self.state
+        s = self.state # default state of Game is Level
         if not hasattr(s, '_init') or s._init:
             s._init = 0
             if self.fnc('init'): return
@@ -139,8 +139,8 @@ class Game:
                 if self.fnc('event', e): return
 
         #TODO
-        testEvent = pygame.event.Event(USEREVENT,{'action':'right'})
-        pygame.event.post(testEvent)
+        #testEvent = pygame.event.Event(USEREVENT,{'action':'right'})
+        #pygame.event.post(testEvent)
 
 
         self.tick()

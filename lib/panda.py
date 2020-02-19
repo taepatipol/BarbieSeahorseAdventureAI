@@ -22,6 +22,7 @@ def init(g,r,n,facing,*params):
     s.strength = 30000
     
     s.standing = None
+    s.type = 'panda'
     return s
     
 def loop(g,s):

@@ -28,6 +28,7 @@ def init(g,r,p):
     s.vy = 0
     s.rect.centerx += s.vx*(6+s.rect.width/2)
     s.rect.centery -= 2
+    s.type = 'laser'
     
     return s
     

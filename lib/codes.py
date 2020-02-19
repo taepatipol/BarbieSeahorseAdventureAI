@@ -111,7 +111,7 @@ def c_init(g, pos, n):
     if n not in INIT_CODES: return
     v = INIT_CODES[n]
     return v[0](g, pygame.Rect(x * TW, y * TH, TW, TH), n, *v[1:])
-
+    #MYNOTE v[0] = sprite.player.init or sprite.boss.init
 
 def c_run(g, pos, n):
     x, y = pos

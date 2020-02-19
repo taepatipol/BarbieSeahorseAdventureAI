@@ -23,6 +23,7 @@ def init(g,r,p, big=False):
     s.life = 600
     s.strength = 1
     s.standing = None
+    s.type = 'fireball'
 
     s.bounces = 3
     

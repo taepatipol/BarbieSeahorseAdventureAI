@@ -1,8 +1,8 @@
 from pygame.locals import *
 
 SW,SH = 320,240
-TW,TH = 16,16
-FPS = 60
+TW,TH = 16,16 #MYNOTE tile size change this cause the tile to look messed up (not bigger)
+FPS = 60 # 60 is default change this can change speed of game
 IROTATE = 64
 #FPS = 10
 

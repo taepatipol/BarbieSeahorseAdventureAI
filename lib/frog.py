@@ -25,6 +25,7 @@ def init(g,r,n,vx,*params):
     s.walking = True
     # make sure this is always different at startup
     s._prev = None
+    s.type = 'frog'
     
     s.strength = 3
     s.vy_jump = 0

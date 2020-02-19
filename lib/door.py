@@ -16,6 +16,7 @@ def init(g,r,n,hidden = False,*params):
     s.open = None
     s.hit_groups.add('player')
     s.hidden = hidden
+    s.type = 'door'
     if hidden:
         s.image = None
     #s.hit = hit

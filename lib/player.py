@@ -23,6 +23,7 @@ def init(g,r,n,*params):
     s.flash_timer = 0
     s.shooting = 0
     s.powered_up = False
+    s.type = "player" #mycode
     if hasattr(g.game, 'powerup'):
         s.powered_up = g.game.powerup
     s.powerup_transition = 0

@@ -288,7 +288,7 @@ def main():
     g.init()
 
     import menu
-    l = l2 = menu.Menu(g)
+    l = l2 = menu.Menu(g) # TODO check if it return level
     #l = menu.Intro(g,l2)
     if fname != None:
         import level

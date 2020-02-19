@@ -43,6 +43,8 @@ def init(g,r,n,*params):
     s._prev = None # pygame.Rect(s.rect)
     s.strength = 6
 
+    s.type = 'boss'
+
     #s.standing = None
     return s
     

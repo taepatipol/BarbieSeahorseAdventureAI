@@ -21,6 +21,7 @@ def init(g,r,n,*params):
     s.strength = 3
     
     s.standing = None
+    s.type = 'spikey'
     return s
     
 def loop(g,s):

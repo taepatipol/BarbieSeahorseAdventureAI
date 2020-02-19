@@ -32,6 +32,7 @@ def init(g,r,n,facing = 'left',*params):
     s.strength = 3
     
     s.standing = None
+    s.type = 'shootbot'
     return s
     
 def loop(g,s):

@@ -37,6 +37,8 @@ def init(g,r,p, big=False):
     s.rect.centery -= 4
     
     g.game.sfx['bubble'].play()
+
+    s.type = 'bubble'
     
     return s
 
