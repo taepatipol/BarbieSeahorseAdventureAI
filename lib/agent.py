@@ -1,5 +1,6 @@
 import pygame
 import time
+import neat
 
 class Agent:
     def __init__(self,g):

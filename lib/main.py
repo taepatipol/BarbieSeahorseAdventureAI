@@ -294,7 +294,7 @@ def main():
         import level
         l = level.Level(g,fname,engine.Quit(g)) #MYCOMMENT CAN COMMENT THIS AND PLAY GAME LIKE NORMAL
 
-    a = agent.Agent(g) #TODO
+    #a = agent.Agent(g) #TODO
         
     g.run(l)#MYCOMMENT game run menu  !! l is the g.state
     print("stop running")

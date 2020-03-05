@@ -79,14 +79,15 @@ def event(g,s,e):
         s.shooting = 10
 
     #MYCODE (not work, have to control how long it walk each event)
-    # if e.type is USEREVENT and e.action == 'right':
-    #     s.vx += 0.5
-    #     s.facing = 'right'
-    #     pygame.time.delay(100)
-    #     s.vx -= 0.5
-    # if e.type is USEREVENT and e.action == 'left':
-    #     s.vx -= 0.5
-    #     s.facing = 'left'
+    if e.type is USEREVENT and e.action == 'right':
+        if s.vx < 2:
+            s.vx += 1
+        s.facing = 'right'
+        #s.vx -= 1
+    if e.type is USEREVENT and e.action == 'left':
+        if s.vx > -2:
+            s.vx -= 1
+        s.facing = 'left'
 
         
     if e.type is KEYDOWN and e.key == K_F10:

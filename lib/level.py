@@ -360,7 +360,7 @@ class Level:
         # printing sprites rect position MYCODE
         spritesData = []
         for s in self.sprites:
-            spriteData = [s.rect.centerx, s.rect.centery]
+            spriteData = [s.rect.left, s.rect.top]
             if hasattr(s,'type'):
                 spriteData.append(s.type)
             spritesData.append(spriteData)
@@ -372,8 +372,16 @@ class Level:
             for t in l:
                 if t is not None:
                     tileData = [t.rect.centerx, t.rect.centery]
-                # tilesData.append(tileData)
-        agentConnect.dataToInput(tilesData, spritesData)
+                tilesData.append(tileData)
+        screenView = self.view
+        agentConnect.dataToInput(tilesData, spritesData,screenView.left,screenView.top)
+        #MYCODE random control
+        # if self.frame % 180 < 120:
+        #     agentConnect.mock('right')
+        # else:
+        #     agentConnect.mock('left')
+        # agentConnect.mock('jump')
+        # agentConnect.mock('bubble')
 
         # more frames
         self.frame += 1

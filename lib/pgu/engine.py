@@ -144,6 +144,7 @@ class Game:
 
 
         self.tick()
+
         return
 
     def init(self):

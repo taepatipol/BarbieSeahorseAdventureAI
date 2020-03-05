@@ -1,9 +1,60 @@
 import numpy as np
 import pygame
 from pygame.locals import *
+import math
+from cnst import *
+import sys
+import os
 
-def dataToInput(tileList,spriteList):
-    print(tileList,spriteList)
+def dataToInput(tileList,spriteList,scXin=0,scYin=0):
+    scY = scYin
+    scX = scXin
+    np.set_printoptions(threshold=sys.maxsize)
+    grid = np.zeros((SH/TH,SW/TW))
+    #print(grid)
+
+    #plot the sprites
+
+    for spriteCo in spriteList:
+        if len(spriteCo) < 3: continue
+        x = spriteCo[0]-scX
+        y = spriteCo[1]-scY
+        type = spriteCo[2]
+        gridX = int(math.floor(x/TW))
+        gridY = int(math.floor(y/TH))
+        if gridX >= 0 and gridX < SW/TW and gridY >= 0 and gridY < SH/TH:
+            dict = {
+                'player':1,
+                'parrot':8,
+                'bubble':2,
+                'capsule':3,
+                'door':4,
+                'fireball':7,
+                'fireguy':8,
+                'frog':8,
+                'laser':7,
+                'panda':8,
+                'platform':3,
+                'robo':8,
+                'shootbot':8,
+                'brobo':8,
+                'spikey':7
+            }
+            grid[gridY,gridX] = dict.get(type,0)
+        #print gridX, gridY, type, x, y
+
+    for tileCo in tileList:
+        if len(tileCo) < 2: continue
+        x = tileCo[0] - scX
+        y = tileCo[1] - scY
+        gridX = int(math.floor(x / TW))
+        gridY = int(math.floor(y / TH))
+        if gridX >= 0 and gridX < SW / TW and gridY >= 0 and gridY < SH / TH:
+            grid[gridY,gridX] = 9
+
+    print("----------------------------------\n"+"\r" + str(grid))
+
+
 
 def OutputToControl(al):
     # action is [left,right,up,down,jump,shoot]
@@ -28,3 +79,17 @@ def OutputToControl(al):
     if actionsList[3]:
         downEvent = pygame.event.Event(USEREVENT, {'action': 'down'})
         pygame.event.post(downEvent)
+
+    # if jump
+    if actionsList[4]:
+        jumpEvent = pygame.event.Event(USEREVENT, {'action': 'jump'})
+        pygame.event.post(jumpEvent)
+
+    # if shoot
+    if actionsList[5]:
+        shootEvent = pygame.event.Event(USEREVENT, {'action': 'bubble'})
+        pygame.event.post(shootEvent)
+
+def mock(action):
+    shootEvent = pygame.event.Event(USEREVENT, {'action': action})
+    pygame.event.post(shootEvent)
