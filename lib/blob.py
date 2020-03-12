@@ -30,11 +30,11 @@ def init(g,r,n,*params):
     return s
     
 def loop(g,s):
-    print 'loop'
+    #print 'loop'
     sprite.apply_gravity(g,s)
     sprite.apply_standing(g,s)
 
-    print s.vy
+    #print s.vy
 
     if s.next_jump == 0 and s.standing:
         s.vy = -6.0

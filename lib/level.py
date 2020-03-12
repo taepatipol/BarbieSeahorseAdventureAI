@@ -357,24 +357,31 @@ class Level:
             if self.player != None:
                 self.player.pan(self,self.player)
 
-        # printing sprites rect position MYCODE
-        spritesData = []
-        for s in self.sprites:
-            spriteData = [s.rect.left, s.rect.top]
-            if hasattr(s,'type'):
-                spriteData.append(s.type)
-            spritesData.append(spriteData)
-
-
         # printing tiles position? may be
         tilesData = []
         for l in self.layer:
             for t in l:
                 if t is not None:
-                    tileData = [t.rect.centerx, t.rect.centery]
-                tilesData.append(tileData)
+                    #if not hasattr(t,'standable'): break
+                    #if t.standable != 1: break
+                    if not hasattr(t,'hit_groups'): break
+                    # if 'solid' not in list(t.hit_groups): break
+                    tileData = [t.rect.centerx, t.rect.centery, t.hit_groups]
+                    tilesData.append(tileData)
+
         screenView = self.view
+
+        # printing sprites rect position MYCODE
+        spritesData = []
+        for s in self.sprites:
+            spriteData = [s.rect.centerx, s.rect.centery]
+            if hasattr(s, 'type'):
+                spriteData.append(s.type)
+            spritesData.append(spriteData)
+
         agentConnect.dataToInput(tilesData, spritesData,screenView.left,screenView.top)
+
+
         #MYCODE random control
         # if self.frame % 180 < 120:
         #     agentConnect.mock('right')

@@ -12,8 +12,21 @@ def dataToInput(tileList,spriteList,scXin=0,scYin=0):
     np.set_printoptions(threshold=sys.maxsize)
     grid = np.zeros((SH/TH,SW/TW))
     #print(grid)
+    #hitfile = open(r"D:\study\senior\toba_bubble_kong-1.0\hitgroups.txt","w+")
 
-    #plot the sprites
+    for tileCo in tileList:
+        if len(tileCo) < 2: continue
+        x = tileCo[0] - scX
+        y = tileCo[1] - scY
+        hitGroups = list(tileCo[2])
+        gridX = int(math.floor(x / TW))
+        gridY = int(math.floor(y / TH))
+        if gridX >= 0 and gridX < SW / TW and gridY >= 0 and gridY < SH / TH:
+            if 'player' not in hitGroups:
+                for group in hitGroups:
+                    #hitfile.write(group)
+                grid[gridY,gridX] = 9
+    #hitfile.close()
 
     for spriteCo in spriteList:
         if len(spriteCo) < 3: continue
@@ -38,19 +51,11 @@ def dataToInput(tileList,spriteList,scXin=0,scYin=0):
                 'robo':8,
                 'shootbot':8,
                 'brobo':8,
-                'spikey':7
+                'spikey':7,
+                'blob':8
             }
-            grid[gridY,gridX] = dict.get(type,0)
-        #print gridX, gridY, type, x, y
+            grid[gridY,gridX] = dict.get(type,99)
 
-    for tileCo in tileList:
-        if len(tileCo) < 2: continue
-        x = tileCo[0] - scX
-        y = tileCo[1] - scY
-        gridX = int(math.floor(x / TW))
-        gridY = int(math.floor(y / TH))
-        if gridX >= 0 and gridX < SW / TW and gridY >= 0 and gridY < SH / TH:
-            grid[gridY,gridX] = 9
 
     print("----------------------------------\n"+"\r" + str(grid))
 
