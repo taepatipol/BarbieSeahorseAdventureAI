@@ -6,6 +6,10 @@ from cnst import *
 import sys
 import os
 
+def fitnessF(playerPos,levelName):
+    pass
+
+
 def dataToInput(tileList,spriteList,scXin=0,scYin=0):
     scY = scYin
     scX = scXin
@@ -21,11 +25,9 @@ def dataToInput(tileList,spriteList,scXin=0,scYin=0):
         hitGroups = list(tileCo[2])
         gridX = int(math.floor(x / TW))
         gridY = int(math.floor(y / TH))
-        if gridX >= 0 and gridX < SW / TW and gridY >= 0 and gridY < SH / TH:
-            if 'player' not in hitGroups:
-                for group in hitGroups:
-                    #hitfile.write(group)
-                grid[gridY,gridX] = 9
+        if gridX >= 0 and gridX < SW/TW and gridY >= 0 and gridY < SH/TH:
+            if 'solid' not in hitGroups and 'standable' not in hitGroups: continue
+            grid[gridY,gridX] = 9
     #hitfile.close()
 
     for spriteCo in spriteList:

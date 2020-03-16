@@ -78,7 +78,7 @@ def event(g,s,e):
             sprites.bubble.init(g,s.rect,s,big=False)
         s.shooting = 10
 
-    #MYCODE (not work, have to control how long it walk each event)
+    #MYCODE
     if e.type is USEREVENT and e.action == 'right':
         if s.vx < 2:
             s.vx += 1

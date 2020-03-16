@@ -332,7 +332,7 @@ class Level:
                         if not t.hit_groups.intersection(s.groups): continue
                         dist = abs(t.rect.centerx-s.rect.centerx)+abs(t.rect.centery-s.rect.centery)
                         hits.append([dist,t])
-                            
+
                 hits.sort()
                 for dist,t in hits:
                     if not t.rect.colliderect(s.rect): continue
@@ -357,15 +357,14 @@ class Level:
             if self.player != None:
                 self.player.pan(self,self.player)
 
-        # printing tiles position? may be
+        # printing tiles position
         tilesData = []
         for l in self.layer:
             for t in l:
                 if t is not None:
                     #if not hasattr(t,'standable'): break
                     #if t.standable != 1: break
-                    if not hasattr(t,'hit_groups'): break
-                    # if 'solid' not in list(t.hit_groups): break
+
                     tileData = [t.rect.centerx, t.rect.centery, t.hit_groups]
                     tilesData.append(tileData)
 
