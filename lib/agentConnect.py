@@ -6,8 +6,61 @@ from cnst import *
 import sys
 import os
 
+# utility for fitness
+def calculateDistance(x1, y1, x2, y2):
+    dist = math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2)
+    return dist
+
+def calculateFitness(dist):
+    try:
+        fit = 1/dist
+    except ZeroDivisionError:
+        fit = 1
+    return fit
+
 def fitnessF(playerPos,levelName):
-    pass
+    if playerPos == None:
+        print "fitness function error: can not get player position"
+    else:
+        # levelSwitcher = {
+        #     'Jungle - 1':'jungle1',
+        #     'Jungle - 2':'jungle2',
+        #     'Jungle - 3':'jungle3',
+        #     'Jungle - 4':'jungle4',
+        #     'Volcano - 1':'volcano1',
+        #     'Volcano - 2':'volcano2',
+        #     'Volcano - 3':'volcano3',
+        #     '* Bonus *':'bonus',
+        #     'Moon - 1':'moon1',
+        #     'Moon - 2':'moon2',
+        #     'Moon - 3':'moon3',
+        #     'Boss':'boss'
+        # }
+        playerX = int(math.floor(playerPos[0] / TW))
+        playerY = int(math.floor(playerPos[1] / TH))
+        if levelName == 'Jungle - 1':
+            #specify zone
+            currentZone = ''
+            if playerY <= 32:
+                if playerX <= 75: currentZone = 1
+                else: currentZone = 3
+            else: currentZone = 2
+
+            #calc fitness base on distance to door/finish line
+            if currentZone == 1:
+                fit = calculateFitness(calculateDistance(playerX,playerY,69,13))
+                return fit
+            elif currentZone == 2:
+                fit = calculateFitness(calculateDistance(playerX, playerY, 78, 48))
+                return fit + 1
+            elif currentZone == 3:
+                fit = calculateFitness(calculateDistance(playerX, playerY, 156, 27))
+                return fit + 2
+
+
+        elif levelName == 'Jungle - 2':
+            pass
+    return 0
 
 
 def dataToInput(tileList,spriteList,scXin=0,scYin=0):

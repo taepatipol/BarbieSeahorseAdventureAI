@@ -90,6 +90,7 @@ class Level:
             self.title = os.path.basename(self.fname)
         self.data = load_level(fname) #load_level of level file to self.data the file is .tga
         #MYNOTE self.data is the rgb value of map
+        print "running level : "+ self.title
 
         #self.images = load_images(data.filepath('images'))
         self.images = Level._images
@@ -371,15 +372,23 @@ class Level:
         screenView = self.view
 
         # printing sprites rect position MYCODE
+        playerSprite = None
+        playerPos = None
         spritesData = []
         for s in self.sprites:
             spriteData = [s.rect.centerx, s.rect.centery]
             if hasattr(s, 'type'):
                 spriteData.append(s.type)
+                if s.type == 'player': playerSprite = s
             spritesData.append(spriteData)
 
         agentConnect.dataToInput(tilesData, spritesData,screenView.left,screenView.top)
-
+        if playerSprite != None:
+            playerPos = [playerSprite.rect.centerx, playerSprite.rect.centery]
+        fitness = agentConnect.fitnessF(playerPos,self.title)
+        #print fitness
+        if fitness % 1 == 0:
+            agentConnect.mock('up')
 
         #MYCODE random control
         # if self.frame % 180 < 120:
