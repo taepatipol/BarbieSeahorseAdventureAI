@@ -388,15 +388,15 @@ class Level:
         fitness = agentConnect.fitnessF(playerPos,self.title)
         #print fitness
         if fitness % 1 == 0:
-            agentConnect.mock('up')
+            agentConnect.doAction('up')
 
         #MYCODE random control
         # if self.frame % 180 < 120:
-        #     agentConnect.mock('right')
+        #     agentConnect.doAction('right')
         # else:
-        #     agentConnect.mock('left')
-        # agentConnect.mock('jump')
-        # agentConnect.mock('bubble')
+        #     agentConnect.doAction('left')
+        # agentConnect.doAction('jump')
+        # agentConnect.doAction('bubble')
 
         # more frames
         self.frame += 1

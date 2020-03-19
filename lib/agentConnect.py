@@ -6,19 +6,22 @@ from cnst import *
 import sys
 import os
 
+
 # utility for fitness
 def calculateDistance(x1, y1, x2, y2):
     dist = math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2)
     return dist
 
+
 def calculateFitness(dist):
     try:
-        fit = 1/dist
+        fit = 1 / dist
     except ZeroDivisionError:
         fit = 1
     return fit
 
-def fitnessF(playerPos,levelName):
+
+def fitnessF(playerPos, levelName):
     if playerPos == None:
         print "fitness function error: can not get player position"
     else:
@@ -39,16 +42,19 @@ def fitnessF(playerPos,levelName):
         playerX = int(math.floor(playerPos[0] / TW))
         playerY = int(math.floor(playerPos[1] / TH))
         if levelName == 'Jungle - 1':
-            #specify zone
+            # specify zone
             currentZone = ''
             if playerY <= 32:
-                if playerX <= 75: currentZone = 1
-                else: currentZone = 3
-            else: currentZone = 2
+                if playerX <= 75:
+                    currentZone = 1
+                else:
+                    currentZone = 3
+            else:
+                currentZone = 2
 
-            #calc fitness base on distance to door/finish line
+            # calc fitness base on distance to door/finish line
             if currentZone == 1:
-                fit = calculateFitness(calculateDistance(playerX,playerY,69,13))
+                fit = calculateFitness(calculateDistance(playerX, playerY, 69, 13))
                 return fit
             elif currentZone == 2:
                 fit = calculateFitness(calculateDistance(playerX, playerY, 78, 48))
@@ -60,16 +66,16 @@ def fitnessF(playerPos,levelName):
 
         elif levelName == 'Jungle - 2':
             pass
-    return 0
+    return 0.1
 
 
-def dataToInput(tileList,spriteList,scXin=0,scYin=0):
+def dataToInput(tileList, spriteList, scXin=0, scYin=0):
     scY = scYin
     scX = scXin
     np.set_printoptions(threshold=sys.maxsize)
-    grid = np.zeros((SH/TH,SW/TW))
-    #print(grid)
-    #hitfile = open(r"D:\study\senior\toba_bubble_kong-1.0\hitgroups.txt","w+")
+    grid = np.zeros((SH / TH, SW / TW))
+    # print(grid)
+    # hitfile = open(r"D:\study\senior\toba_bubble_kong-1.0\hitgroups.txt","w+")
 
     for tileCo in tileList:
         if len(tileCo) < 2: continue
@@ -78,50 +84,48 @@ def dataToInput(tileList,spriteList,scXin=0,scYin=0):
         hitGroups = list(tileCo[2])
         gridX = int(math.floor(x / TW))
         gridY = int(math.floor(y / TH))
-        if gridX >= 0 and gridX < SW/TW and gridY >= 0 and gridY < SH/TH:
+        if gridX >= 0 and gridX < SW / TW and gridY >= 0 and gridY < SH / TH:
             if 'solid' not in hitGroups and 'standable' not in hitGroups: continue
-            grid[gridY,gridX] = 9
-    #hitfile.close()
+            grid[gridY, gridX] = 9
+    # hitfile.close()
 
     for spriteCo in spriteList:
         if len(spriteCo) < 3: continue
-        x = spriteCo[0]-scX
-        y = spriteCo[1]-scY
+        x = spriteCo[0] - scX
+        y = spriteCo[1] - scY
         type = spriteCo[2]
-        gridX = int(math.floor(x/TW))
-        gridY = int(math.floor(y/TH))
-        if gridX >= 0 and gridX < SW/TW and gridY >= 0 and gridY < SH/TH:
+        gridX = int(math.floor(x / TW))
+        gridY = int(math.floor(y / TH))
+        if gridX >= 0 and gridX < SW / TW and gridY >= 0 and gridY < SH / TH:
             dict = {
-                'player':1,
-                'parrot':8,
-                'bubble':2,
-                'capsule':3,
-                'door':4,
-                'fireball':7,
-                'fireguy':8,
-                'frog':8,
-                'laser':7,
-                'panda':8,
-                'platform':3,
-                'robo':8,
-                'shootbot':8,
-                'brobo':8,
-                'spikey':7,
-                'blob':8
+                'player': 1,
+                'parrot': 8,
+                'bubble': 2,
+                'capsule': 3,
+                'door': 4,
+                'fireball': 7,
+                'fireguy': 8,
+                'frog': 8,
+                'laser': 7,
+                'panda': 8,
+                'platform': 3,
+                'robo': 8,
+                'shootbot': 8,
+                'brobo': 8,
+                'spikey': 7,
+                'blob': 8
             }
-            grid[gridY,gridX] = dict.get(type,99)
+            grid[gridY, gridX] = dict.get(type, 99)
 
-
-    print("----------------------------------\n"+"\r" + str(grid))
-
+    print("----------------------------------\n" + "\r" + str(grid))
 
 
 def OutputToControl(al):
     # action is [left,right,up,down,jump,shoot]
-    actionsList = [0,1,0,0,0,0]
+    actionsList = [0, 1, 0, 0, 0, 0]
 
     # if left
-    if actionsList[0]: #TODO work with left right event
+    if actionsList[0]:  # TODO work with left right event
         leftEvent = pygame.event.Event(USEREVENT, {'action': 'left'})
         pygame.event.post(leftEvent)
 
@@ -150,6 +154,7 @@ def OutputToControl(al):
         shootEvent = pygame.event.Event(USEREVENT, {'action': 'bubble'})
         pygame.event.post(shootEvent)
 
-def mock(action):
+
+def doAction(action):
     shootEvent = pygame.event.Event(USEREVENT, {'action': action})
     pygame.event.post(shootEvent)
