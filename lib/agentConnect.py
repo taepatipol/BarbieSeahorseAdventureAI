@@ -9,6 +9,14 @@ import os
 def init():
     global grid
     grid = np.zeros((SH / TH, SW / TW))
+    global currentFitness
+    currentFitness = 0
+
+def getScreen():
+    return grid
+
+def getFitness():
+    return currentFitness
 
 # utility for fitness
 def calculateDistance(x1, y1, x2, y2):
@@ -25,6 +33,7 @@ def calculateFitness(dist):
 
 
 def fitnessF(playerPos, levelName):
+    global currentFitness
     if playerPos == None:
         print "fitness function error: can not get player position"
     else:
@@ -58,13 +67,19 @@ def fitnessF(playerPos, levelName):
             # calc fitness base on distance to door/finish line
             if currentZone == 1:
                 fit = calculateFitness(calculateDistance(playerX, playerY, 69, 13))
-                return fit
+                currentFitness = fit
+                return
             elif currentZone == 2:
                 fit = calculateFitness(calculateDistance(playerX, playerY, 78, 48))
-                return fit + 1
+                currentFitness = fit + 1
+                return
             elif currentZone == 3:
                 fit = calculateFitness(calculateDistance(playerX, playerY, 156, 27))
-                return fit + 2
+                if fit == 3:
+                    currentFitness = 10
+                    return #10 fitness is finish level
+                currentFitness = fit
+                return
 
 
         elif levelName == 'Jungle - 2':
@@ -123,7 +138,7 @@ def dataToInput(tileList, spriteList, scXin=0, scYin=0):
     return grid
 
 
-def OutputToControl(al):
+def outputToControl(al):
     # action is [left,right,jump,shoot]
     actionsList = al
 

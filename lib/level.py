@@ -91,6 +91,7 @@ class Level:
         self.data = load_level(fname) #load_level of level file to self.data the file is .tga
         #MYNOTE self.data is the rgb value of map
         print "running level : "+ self.title
+        agentConnect.init()
 
         #self.images = load_images(data.filepath('images'))
         self.images = Level._images
@@ -386,8 +387,10 @@ class Level:
 
         if playerSprite != None:
             playerPos = [playerSprite.rect.centerx, playerSprite.rect.centery]
-        fitness = agentConnect.fitnessF(playerPos,self.title)
+        agentConnect.fitnessF(playerPos,self.title)
+        fitness = agentConnect.getFitness()
         #print fitness
+        print fitness
 
         if fitness % 1 == 0:
             agentConnect.doAction('up')
