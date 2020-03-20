@@ -2,6 +2,7 @@ import pygame
 import time
 import neat
 import agentConnect
+import numpy
 
 
 def eval_genomes(genomes, config):
@@ -16,7 +17,7 @@ def eval_genomes(genomes, config):
 
         while not done:
             screen = agentConnect.getScreen()
-            nnOutput = net.activate(screen)
+            nnOutput = net.activate(screen.flatten())
             agentConnect.outputToControl(nnOutput)
             currentFitness = agentConnect.getFitness()
 

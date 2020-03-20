@@ -5,18 +5,26 @@ import math
 from cnst import *
 import sys
 import os
+import agent
+import level
 
-def init():
+def init(levelIn):
     global grid
     grid = np.zeros((SH / TH, SW / TW))
     global currentFitness
-    currentFitness = 0
+    currentFitness = 0.01
+    global level
+    level = levelIn
+    agent.start()
 
 def getScreen():
     return grid
 
 def getFitness():
     return currentFitness
+
+def loopLevel():
+    level.loop()
 
 # utility for fitness
 def calculateDistance(x1, y1, x2, y2):
@@ -90,7 +98,7 @@ def fitnessF(playerPos, levelName):
 def dataToInput(tileList, spriteList, scXin=0, scYin=0):
     scY = scYin
     scX = scXin
-    np.set_printoptions(threshold=sys.maxsize)
+    grid = np.zeros((SH / TH, SW / TW))
     # print(grid)
     # hitfile = open(r"D:\study\senior\toba_bubble_kong-1.0\hitgroups.txt","w+")
 
@@ -144,23 +152,21 @@ def outputToControl(al):
 
     # if left
     if actionsList[0]:  # TODO work with left right event
-        leftEvent = pygame.event.Event(USEREVENT, {'action': 'left'})
-        pygame.event.post(leftEvent)
+        doAction('left')
 
     # if right
     if actionsList[1]:
-        rightEvent = pygame.event.Event(USEREVENT, {'action': 'right'})
-        pygame.event.post(rightEvent)
+        doAction('right')
 
     # if jump
     if actionsList[2]:
-        jumpEvent = pygame.event.Event(USEREVENT, {'action': 'jump'})
-        pygame.event.post(jumpEvent)
+        doAction('jump')
 
     # if shoot
     if actionsList[3]:
-        shootEvent = pygame.event.Event(USEREVENT, {'action': 'bubble'})
-        pygame.event.post(shootEvent)
+        doAction('bubble')
+
+    level.loop()
 
 
 def doAction(action):

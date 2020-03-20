@@ -91,7 +91,6 @@ class Level:
         self.data = load_level(fname) #load_level of level file to self.data the file is .tga
         #MYNOTE self.data is the rgb value of map
         print "running level : "+ self.title
-        agentConnect.init()
 
         #self.images = load_images(data.filepath('images'))
         self.images = Level._images
@@ -154,10 +153,12 @@ class Level:
 
         #just do a loop, just to get things all shined up ..
         self.status = None
-        self.loop()
+        #self.loop()
         self.status = '_first'
         self.player.image = None
         self.player.exploded = 30 # time when player appear effect
+
+        agentConnect.init(self)
                 
     def set_bkgr(self,fname):
         if self._bkgr_fname == fname:
