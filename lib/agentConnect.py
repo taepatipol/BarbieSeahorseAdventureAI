@@ -6,6 +6,9 @@ from cnst import *
 import sys
 import os
 
+def init():
+    global grid
+    grid = np.zeros((SH / TH, SW / TW))
 
 # utility for fitness
 def calculateDistance(x1, y1, x2, y2):
@@ -73,7 +76,6 @@ def dataToInput(tileList, spriteList, scXin=0, scYin=0):
     scY = scYin
     scX = scXin
     np.set_printoptions(threshold=sys.maxsize)
-    grid = np.zeros((SH / TH, SW / TW))
     # print(grid)
     # hitfile = open(r"D:\study\senior\toba_bubble_kong-1.0\hitgroups.txt","w+")
 
@@ -118,11 +120,12 @@ def dataToInput(tileList, spriteList, scXin=0, scYin=0):
             grid[gridY, gridX] = dict.get(type, 99)
 
     print("----------------------------------\n" + "\r" + str(grid))
+    return grid
 
 
 def OutputToControl(al):
-    # action is [left,right,up,down,jump,shoot]
-    actionsList = [0, 1, 0, 0, 0, 0]
+    # action is [left,right,jump,shoot]
+    actionsList = al
 
     # if left
     if actionsList[0]:  # TODO work with left right event
@@ -134,23 +137,13 @@ def OutputToControl(al):
         rightEvent = pygame.event.Event(USEREVENT, {'action': 'right'})
         pygame.event.post(rightEvent)
 
-    # if up
-    if actionsList[2]:
-        upEvent = pygame.event.Event(USEREVENT, {'action': 'up'})
-        pygame.event.post(upEvent)
-
-    # if down
-    if actionsList[3]:
-        downEvent = pygame.event.Event(USEREVENT, {'action': 'down'})
-        pygame.event.post(downEvent)
-
     # if jump
-    if actionsList[4]:
+    if actionsList[2]:
         jumpEvent = pygame.event.Event(USEREVENT, {'action': 'jump'})
         pygame.event.post(jumpEvent)
 
     # if shoot
-    if actionsList[5]:
+    if actionsList[3]:
         shootEvent = pygame.event.Event(USEREVENT, {'action': 'bubble'})
         pygame.event.post(shootEvent)
 

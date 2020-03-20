@@ -18,7 +18,7 @@ from pgu import engine
 from cnst import *
 import data
 
-import agent
+import agentConnect
 
 class Input:
     def __init__(self):
@@ -294,7 +294,7 @@ def main():
         import level
         l = level.Level(g,fname,engine.Quit(g)) #MYCOMMENT CAN COMMENT THIS AND PLAY GAME LIKE NORMAL
 
-    #a = agent.Agent(g) #TODO
-        
+    agentConnect.init()
+
     g.run(l)#MYCOMMENT game run menu  !! l is the g.state
     print("stop running")

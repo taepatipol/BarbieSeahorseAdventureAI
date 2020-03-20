@@ -383,10 +383,12 @@ class Level:
             spritesData.append(spriteData)
 
         agentConnect.dataToInput(tilesData, spritesData,screenView.left,screenView.top)
+
         if playerSprite != None:
             playerPos = [playerSprite.rect.centerx, playerSprite.rect.centery]
         fitness = agentConnect.fitnessF(playerPos,self.title)
         #print fitness
+
         if fitness % 1 == 0:
             agentConnect.doAction('up')
 
