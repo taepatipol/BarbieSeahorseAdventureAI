@@ -80,6 +80,7 @@ class Level:
         self.parent = parent
 
     def init(self):
+        print 'level init'
         #self._tiles = load_tiles(data.filepath('tiles.tga'))
         self._tiles = Level._tiles
         fname = self.fname # MYNOTE by default fname = none
@@ -449,7 +450,10 @@ class Level:
             self.status = None
             return menu.Transition(self.game,self)
             
-            
+    def doAction(self,actionList):
+        for action in actionList:
+            event = pygame.event.Event(USEREVENT, {'action': action})
+            pygame.event.post(event)
         
     
     def event(self,e):

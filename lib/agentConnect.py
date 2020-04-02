@@ -149,26 +149,27 @@ def dataToInput(tileList, spriteList, scXin=0, scYin=0):
 def outputToControl(al):
     # action is [left,right,jump,shoot]
     actionsList = al
+    outAction = []
 
     # if left
     if actionsList[0]:  # TODO work with left right event
-        doAction('left')
+        outAction.append('left')
 
     # if right
     if actionsList[1]:
-        doAction('right')
+        outAction.append('right')
 
     # if jump
     if actionsList[2]:
-        doAction('jump')
+        outAction.append('jump')
 
     # if shoot
     if actionsList[3]:
-        doAction('bubble')
+        outAction.append('bubble')
 
+    doAction(outAction)
+
+
+def doAction(actionList):
+    level.doAction(actionList)
     level.loop()
-
-
-def doAction(action):
-    shootEvent = pygame.event.Event(USEREVENT, {'action': action})
-    pygame.event.post(shootEvent)
