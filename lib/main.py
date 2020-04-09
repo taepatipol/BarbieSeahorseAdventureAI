@@ -281,7 +281,7 @@ def main():
     
     fname = None #data.filepath(os.path.join('levels','test.tga'))
     for v in sys.argv:
-        if '.tga' in v:
+        if 'lv' in v:
             fname = v
             
     g = Game()
@@ -291,8 +291,19 @@ def main():
     l = l2 = menu.Menu(g) # TODO check if it return level
     #l = menu.Intro(g,l2)
     if fname != None:
+        if fname == 'lv-j1': fname = 'data/levels/phil_1.tga'
+        if fname == 'lv-j2': fname = 'data/levels/phil_7.tga'
+        if fname == 'lv-j3': fname = 'data/levels/tee_1.tga'
+        if fname == 'lv-j4': fname = 'data/levels/phil_2.tga'
+        if fname == 'lv-v1': fname = 'data/levels/fydo_1.tga'
+        if fname == 'lv-v2': fname = 'data/levels/tim_1.tga'
+        if fname == 'lv-v3': fname = 'data/levels/pekuja_2.tga'
+        if fname == 'lv-b': fname = 'data/levels/phil_8.tga'
+        if fname == 'lv-m1': fname = 'data/levels/pekuja_1.tga'
+        if fname == 'lv-m2': fname = 'data/levels/phil_5.tga'
+        if fname == 'lv-m3': fname = 'data/levels/phil_9.tga'
+        if fname == 'lv-boss': fname = 'data/levels/boss_1.tga'
         import level
         l = level.Level(g,fname,engine.Quit(g)) #MYCOMMENT CAN COMMENT THIS AND PLAY GAME LIKE NORMAL
-
     g.run(l)#MYCOMMENT game run menu  !! l is the g.state
     print("stop running")

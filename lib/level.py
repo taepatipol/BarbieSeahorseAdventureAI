@@ -1,5 +1,7 @@
 import os
 
+import inspect
+
 import pygame
 from pygame.locals import *
 
@@ -154,7 +156,7 @@ class Level:
 
         #just do a loop, just to get things all shined up ..
         self.status = None
-        self.loop()
+        #self.loop() this is not real loop wtf
         self.status = '_first'
         self.player.image = None
         self.player.exploded = 30 # time when player appear effect
@@ -282,7 +284,15 @@ class Level:
     def loop(self):
         #record the high scores
         #print('level loop')
-        #print(self.view)
+        # curframe = inspect.currentframe()
+        # calframe = inspect.getouterframes(curframe, 2)
+        # print('caller name:', calframe[1][3])
+
+        # stack = inspect.stack()
+        # the_class = stack[1][0].f_locals["self"].__class__.__name__
+        # the_method = stack[1][0].f_code.co_name
+        #
+        # print("I was called by {}.{}()".format(the_class, the_method))
         self.game.high = max(self.game.high,self.game.score)
         
         if self.status != '_first':

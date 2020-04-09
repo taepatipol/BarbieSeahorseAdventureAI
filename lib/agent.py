@@ -3,6 +3,8 @@ import time
 import neat
 import agentConnect
 
+global config
+global p
 
 def eval_genomes(genomes, config):
     for genome_id, genome in genomes:

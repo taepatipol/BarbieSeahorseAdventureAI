@@ -10,7 +10,7 @@ def init():
     global grid
     grid = np.zeros((SH / TH, SW / TW))
     global currentFitness
-    currentFitness = 0
+    currentFitness = 0.1
 
 def getScreen():
     return grid
@@ -143,7 +143,7 @@ def outputToControl(al):
     actionsList = al
 
     # if left
-    if actionsList[0]:  # TODO work with left right event
+    if actionsList[0]:
         leftEvent = pygame.event.Event(USEREVENT, {'action': 'left'})
         pygame.event.post(leftEvent)
 

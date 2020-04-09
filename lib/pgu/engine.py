@@ -2,6 +2,10 @@
 """
 import pygame
 from pygame.locals import *
+import inspect
+import sys, os
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+import agent
 
 
 class State:
@@ -115,9 +119,10 @@ class Game:
         if screen != None: self.screen = screen
 
         self.init()
+        #agent.start()
 
         while not self.quit:
-            self.loop()
+            self.loop() #MYNOTE here is the first mainloop
 
     def loop(self):
         s = self.state # default state of Game is Level
@@ -141,6 +146,12 @@ class Game:
         #TODO
         #testEvent = pygame.event.Event(USEREVENT,{'action':'right'})
         #pygame.event.post(testEvent)
+
+        # stack = inspect.stack()
+        # the_class = stack[1][0].f_locals["self"].__class__.__name__
+        # the_method = stack[1][0].f_code.co_name
+        #
+        # print("I was called by {}.{}()".format(the_class, the_method))
 
 
         self.tick()
