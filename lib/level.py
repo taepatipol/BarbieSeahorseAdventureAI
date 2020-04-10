@@ -15,12 +15,6 @@ import menu
 import levels
 import agentConnect
 
-global tilesData
-global spritesData
-global playerSprite
-global playerPos
-global fitness
-
 def load_level(fname):
     img = pygame.image.load(fname)
     #return [[[img.get_at((x,y))[n] for x in xrange(0,img.get_width())] for y in xrange(0,img.get_height())] for n in xrange(0,4)]
@@ -86,6 +80,11 @@ class Level:
         self.game = game
         self.fname = fname
         self.parent = parent
+        self.currentFitness = 0.1
+        self.tilesData = []
+        self.spritesData = []
+        self.playerSprite = None
+        self.playerPos = None
 
     def init(self):
         #self._tiles = load_tiles(data.filepath('tiles.tga'))
@@ -99,7 +98,7 @@ class Level:
         self.data = load_level(fname) #load_level of level file to self.data the file is .tga
         #MYNOTE self.data is the rgb value of map
         print "running level : "+ self.title
-        agentConnect.init(self)
+        #agentConnect.init(self)
 
         #self.images = load_images(data.filepath('images'))
         self.images = Level._images
@@ -376,7 +375,7 @@ class Level:
                 self.player.pan(self,self.player)
 
         # printing tiles position
-        tilesData = []
+        self.tilesData = []
         for l in self.layer:
             for t in l:
                 if t is not None:
@@ -384,31 +383,29 @@ class Level:
                     #if t.standable != 1: break
 
                     tileData = [t.rect.centerx, t.rect.centery, t.hit_groups]
-                    tilesData.append(tileData)
+                    self.tilesData.append(tileData)
 
-        screenView = self.view
+        # screenView = self.view
 
         # printing sprites rect position MYCODE
-        playerSprite = None
-        playerPos = None
-        spritesData = []
+        self.playerSprite = None
+        self.playerPos = None
+        self.spritesData = []
         for s in self.sprites:
             spriteData = [s.rect.centerx, s.rect.centery]
             if hasattr(s, 'type'):
                 spriteData.append(s.type)
-                if s.type == 'player': playerSprite = s
-            spritesData.append(spriteData)
+                if s.type == 'player': self.playerSprite = s
+            self.spritesData.append(spriteData)
 
         # agentConnect.dataToInput(tilesData, spritesData,screenView.left,screenView.top)
 
-        if playerSprite != None:
-            playerPos = [playerSprite.rect.centerx, playerSprite.rect.centery]
-        agentConnect.fitnessF(playerPos,self.title)
-        fitness = agentConnect.getFitness()
+        if self.playerSprite != None:
+            self.playerPos = [self.playerSprite.rect.centerx, self.playerSprite.rect.centery]
+        self.currentFitness = agentConnect.fitnessF(self.playerPos, self.title)
 
-        print fitness
 
-        if fitness % 1 == 0:
+        if self.currentFitness % 1 == 0:
             agentConnect.doAction('up')
 
         #print self.status

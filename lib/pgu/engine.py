@@ -6,7 +6,7 @@ import inspect
 import sys, os
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 import agent
-import agentConnect
+from agentConnect import agentConnect
 
 
 class State:
@@ -86,7 +86,8 @@ class Quit(State):
 class Game:
     """Template Class - The state engine.
     """
-    global agentCon
+    def __init__(self):
+        self.agentCon = None
 
     def fnc(self, f, v=None): #MYNOTE use to run function f of self.state with v attr
         s = self.state
@@ -122,10 +123,13 @@ class Game:
 
         self.init()
         #agent.start()
-        agentCon = agentConnect.init(self.state)
+        self.agentCon = agentConnect(self.state)
 
         while not self.quit:
             self.loop() #MYNOTE here is the first mainloop
+            grid = self.agentCon.dataToInput()
+            print("----------------------------------\n" + "\r" + str(grid))
+            print self.agentCon.getFitness()
 
     def loop(self):
         s = self.state # default state of Game is Level

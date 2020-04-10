@@ -6,29 +6,114 @@ from cnst import *
 import sys
 import os
 
-def init(levelIn):
-    global grid
-    grid = np.zeros((SH / TH, SW / TW))
-    global currentFitness
-    currentFitness = 0.1
-    global level
-    level = levelIn
+class agentConnect:
 
-def getScreen():
-    return grid
+    def __init__(self,levelIn):
+        self.grid = np.zeros((SH / TH, SW / TW))
+        self.currentFitness = 0.1
+        self.level = levelIn
 
-def getFitness():
-    return currentFitness
+    def getScreen(self):
+        return self.grid
 
-def getLvStatus():
-    if hasattr(level,'status'): return level.status
-    return None
+    def getFitness(self):
+        return self.level.currentFitness
 
-# utility for fitness
+    def getLvStatus(self):
+        if hasattr(self.level,'status'): return self.level.status
+        return None
+
+    def dataToInput(self):
+        if hasattr(self.level, 'tilesData'): tileList = self.level.tilesData
+        else: return None
+        if hasattr(self.level, 'spritesData'): spriteList = self.level.spritesData
+        else: return None
+        if hasattr(self.level, 'view'):
+            scX = self.level.view.left
+            scY = self.level.view.top
+        else: return None
+        # np.set_printoptions(threshold=sys.maxsize)
+        # print(grid)
+        # hitfile = open(r"D:\study\senior\toba_bubble_kong-1.0\hitgroups.txt","w+")
+        self.grid = np.zeros((SH / TH, SW / TW))
+
+        for tileCo in tileList:
+            if len(tileCo) < 2: continue
+            x = tileCo[0] - scX
+            y = tileCo[1] - scY
+            hitGroups = list(tileCo[2])
+            gridX = int(math.floor(x / TW))
+            gridY = int(math.floor(y / TH))
+            if gridX >= 0 and gridX < SW / TW and gridY >= 0 and gridY < SH / TH:
+                if 'solid' not in hitGroups and 'standable' not in hitGroups: continue
+                self.grid[gridY, gridX] = 9
+        # hitfile.close()
+
+        for spriteCo in spriteList:
+            if len(spriteCo) < 3: continue
+            x = spriteCo[0] - scX
+            y = spriteCo[1] - scY
+            type = spriteCo[2]
+            gridX = int(math.floor(x / TW))
+            gridY = int(math.floor(y / TH))
+            if gridX >= 0 and gridX < SW / TW and gridY >= 0 and gridY < SH / TH:
+                dict = {
+                    'player': 1,
+                    'parrot': 8,
+                    'bubble': 2,
+                    'capsule': 3,
+                    'door': 4,
+                    'fireball': 7,
+                    'fireguy': 8,
+                    'frog': 8,
+                    'laser': 7,
+                    'panda': 8,
+                    'platform': 3,
+                    'robo': 8,
+                    'shootbot': 8,
+                    'brobo': 8,
+                    'spikey': 7,
+                    'blob': 8
+                }
+                self.grid[gridY, gridX] = dict.get(type, 99)
+
+        #print("----------------------------------\n" + "\r" + str(self.grid))
+        return self.grid
+
+
+    def outputToControl(self, al):
+        # action is [left,right,jump,shoot]
+        actionsList = al
+
+        # if left
+        if actionsList[0]:
+            leftEvent = pygame.event.Event(USEREVENT, {'action': 'left'})
+            pygame.event.post(leftEvent)
+
+        # if right
+        if actionsList[1]:
+            rightEvent = pygame.event.Event(USEREVENT, {'action': 'right'})
+            pygame.event.post(rightEvent)
+
+        # if jump
+        if actionsList[2]:
+            jumpEvent = pygame.event.Event(USEREVENT, {'action': 'jump'})
+            pygame.event.post(jumpEvent)
+
+        # if shoot
+        if actionsList[3]:
+            shootEvent = pygame.event.Event(USEREVENT, {'action': 'bubble'})
+            pygame.event.post(shootEvent)
+
+
+def doAction(action):
+    shootEvent = pygame.event.Event(USEREVENT, {'action': action})
+    pygame.event.post(shootEvent)
+
+    # utility for fitness
 def calculateDistance(x1, y1, x2, y2):
     dist = math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2)
     return dist
-
 
 def calculateFitness(dist):
     try:
@@ -37,9 +122,7 @@ def calculateFitness(dist):
         fit = 1
     return fit
 
-
 def fitnessF(playerPos, levelName):
-    global currentFitness
     if playerPos == None:
         print "fitness function error: can not get player position"
     else:
@@ -73,103 +156,17 @@ def fitnessF(playerPos, levelName):
             # calc fitness base on distance to door/finish line
             if currentZone == 1:
                 fit = calculateFitness(calculateDistance(playerX, playerY, 69, 13))
-                currentFitness = fit
-                return
+                return fit
             elif currentZone == 2:
                 fit = calculateFitness(calculateDistance(playerX, playerY, 78, 48))
-                currentFitness = fit + 1
-                return
+                return fit+1
             elif currentZone == 3:
                 fit = calculateFitness(calculateDistance(playerX, playerY, 156, 27))
                 if fit == 3:
-                    currentFitness = 10
-                    return #10 fitness is finish level
-                currentFitness = fit
-                return
+                    return  10#10 fitness is finish level
+                return fit
 
 
         elif levelName == 'Jungle - 2':
             pass
     return 0.1
-
-
-def dataToInput(tileList, spriteList, scXin=0, scYin=0):
-    scY = scYin
-    scX = scXin
-    np.set_printoptions(threshold=sys.maxsize)
-    # print(grid)
-    # hitfile = open(r"D:\study\senior\toba_bubble_kong-1.0\hitgroups.txt","w+")
-    # grid = np.zeros((SH / TH, SW / TW))
-
-    for tileCo in tileList:
-        if len(tileCo) < 2: continue
-        x = tileCo[0] - scX
-        y = tileCo[1] - scY
-        hitGroups = list(tileCo[2])
-        gridX = int(math.floor(x / TW))
-        gridY = int(math.floor(y / TH))
-        if gridX >= 0 and gridX < SW / TW and gridY >= 0 and gridY < SH / TH:
-            if 'solid' not in hitGroups and 'standable' not in hitGroups: continue
-            grid[gridY, gridX] = 9
-    # hitfile.close()
-
-    for spriteCo in spriteList:
-        if len(spriteCo) < 3: continue
-        x = spriteCo[0] - scX
-        y = spriteCo[1] - scY
-        type = spriteCo[2]
-        gridX = int(math.floor(x / TW))
-        gridY = int(math.floor(y / TH))
-        if gridX >= 0 and gridX < SW / TW and gridY >= 0 and gridY < SH / TH:
-            dict = {
-                'player': 1,
-                'parrot': 8,
-                'bubble': 2,
-                'capsule': 3,
-                'door': 4,
-                'fireball': 7,
-                'fireguy': 8,
-                'frog': 8,
-                'laser': 7,
-                'panda': 8,
-                'platform': 3,
-                'robo': 8,
-                'shootbot': 8,
-                'brobo': 8,
-                'spikey': 7,
-                'blob': 8
-            }
-            grid[gridY, gridX] = dict.get(type, 99)
-
-    print("----------------------------------\n" + "\r" + str(grid))
-    return grid
-
-
-def outputToControl(al):
-    # action is [left,right,jump,shoot]
-    actionsList = al
-
-    # if left
-    if actionsList[0]:
-        leftEvent = pygame.event.Event(USEREVENT, {'action': 'left'})
-        pygame.event.post(leftEvent)
-
-    # if right
-    if actionsList[1]:
-        rightEvent = pygame.event.Event(USEREVENT, {'action': 'right'})
-        pygame.event.post(rightEvent)
-
-    # if jump
-    if actionsList[2]:
-        jumpEvent = pygame.event.Event(USEREVENT, {'action': 'jump'})
-        pygame.event.post(jumpEvent)
-
-    # if shoot
-    if actionsList[3]:
-        shootEvent = pygame.event.Event(USEREVENT, {'action': 'bubble'})
-        pygame.event.post(shootEvent)
-
-
-def doAction(action):
-    shootEvent = pygame.event.Event(USEREVENT, {'action': action})
-    pygame.event.post(shootEvent)
