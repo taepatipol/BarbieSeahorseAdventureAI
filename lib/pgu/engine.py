@@ -6,6 +6,7 @@ import inspect
 import sys, os
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 import agent
+import agentConnect
 
 
 class State:
@@ -85,6 +86,7 @@ class Quit(State):
 class Game:
     """Template Class - The state engine.
     """
+    global agentCon
 
     def fnc(self, f, v=None): #MYNOTE use to run function f of self.state with v attr
         s = self.state
@@ -102,7 +104,7 @@ class Game:
         # except:
         #    import traceback; traceback.print_exc()
 
-        return 0
+        return 0 #if 1 it will infinite loop with black screen
 
     def run(self, state, screen=None):
         """Run the state engine, this is a infinite loop (until a quit occurs).
@@ -120,17 +122,21 @@ class Game:
 
         self.init()
         #agent.start()
+        agentCon = agentConnect.init(self.state)
 
         while not self.quit:
             self.loop() #MYNOTE here is the first mainloop
 
     def loop(self):
         s = self.state # default state of Game is Level
+        # MYNOTE regular loop without state change fnc will return 0
         if not hasattr(s, '_init') or s._init:
             s._init = 0
             if self.fnc('init'): return
         else:
-            if self.fnc('loop'): return
+            if self.fnc('loop'):
+                #this will run when transition
+                return
         if not hasattr(s, '_paint') or s._paint:
             s._paint = 0
             if self.fnc('paint', self.screen): return

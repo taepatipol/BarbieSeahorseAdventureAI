@@ -6,17 +6,23 @@ from cnst import *
 import sys
 import os
 
-def init():
+def init(levelIn):
     global grid
     grid = np.zeros((SH / TH, SW / TW))
     global currentFitness
     currentFitness = 0.1
+    global level
+    level = levelIn
 
 def getScreen():
     return grid
 
 def getFitness():
     return currentFitness
+
+def getLvStatus():
+    if hasattr(level,'status'): return level.status
+    return None
 
 # utility for fitness
 def calculateDistance(x1, y1, x2, y2):
@@ -53,7 +59,7 @@ def fitnessF(playerPos, levelName):
         # }
         playerX = int(math.floor(playerPos[0] / TW))
         playerY = int(math.floor(playerPos[1] / TH))
-        if levelName == 'Jungle - 1':
+        if levelName == 'phil_1.tga':
             # specify zone
             currentZone = ''
             if playerY <= 32:
@@ -93,6 +99,7 @@ def dataToInput(tileList, spriteList, scXin=0, scYin=0):
     np.set_printoptions(threshold=sys.maxsize)
     # print(grid)
     # hitfile = open(r"D:\study\senior\toba_bubble_kong-1.0\hitgroups.txt","w+")
+    # grid = np.zeros((SH / TH, SW / TW))
 
     for tileCo in tileList:
         if len(tileCo) < 2: continue

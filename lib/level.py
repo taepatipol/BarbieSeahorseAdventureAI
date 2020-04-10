@@ -15,6 +15,12 @@ import menu
 import levels
 import agentConnect
 
+global tilesData
+global spritesData
+global playerSprite
+global playerPos
+global fitness
+
 def load_level(fname):
     img = pygame.image.load(fname)
     #return [[[img.get_at((x,y))[n] for x in xrange(0,img.get_width())] for y in xrange(0,img.get_height())] for n in xrange(0,4)]
@@ -93,7 +99,7 @@ class Level:
         self.data = load_level(fname) #load_level of level file to self.data the file is .tga
         #MYNOTE self.data is the rgb value of map
         print "running level : "+ self.title
-        agentConnect.init()
+        agentConnect.init(self)
 
         #self.images = load_images(data.filepath('images'))
         self.images = Level._images
@@ -393,17 +399,19 @@ class Level:
                 if s.type == 'player': playerSprite = s
             spritesData.append(spriteData)
 
-        agentConnect.dataToInput(tilesData, spritesData,screenView.left,screenView.top)
+        # agentConnect.dataToInput(tilesData, spritesData,screenView.left,screenView.top)
 
         if playerSprite != None:
             playerPos = [playerSprite.rect.centerx, playerSprite.rect.centery]
         agentConnect.fitnessF(playerPos,self.title)
         fitness = agentConnect.getFitness()
-        #print fitness
+
         print fitness
 
         if fitness % 1 == 0:
             agentConnect.doAction('up')
+
+        #print self.status
 
         #MYCODE random control
         # if self.frame % 180 < 120:
@@ -429,9 +437,9 @@ class Level:
                 self.player.loop(self,self.player)
             else:
                 self.status = 'first'
-        elif self.status == 'first':
-            self.status = None
-            return menu.Pause(self.game,'get ready',self)
+        # elif self.status == 'first':
+        #     self.status = None
+        #     return menu.Pause(self.game,'get ready',self)
         elif self.status == 'exit':
             self.game.lcur = (self.game.lcur + 1) % len(levels.LEVELS)
             if self.game.lcur == 0:
