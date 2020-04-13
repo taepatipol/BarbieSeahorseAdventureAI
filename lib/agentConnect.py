@@ -6,7 +6,7 @@ from cnst import *
 import sys
 import os
 
-class agentConnect:
+class AgentConnect:
 
     def __init__(self,levelIn):
         self.grid = np.zeros((SH / TH, SW / TW))

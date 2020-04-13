@@ -1,47 +1,51 @@
 import pygame
 import time
 import neat
-import agentConnect
+from agentConnect import AgentConnect
 
 global config
 global p
 
-def eval_genomes(genomes, config):
-    for genome_id, genome in genomes:
+class Agent:
+    def __init__(self,agentCon):
+        self.agentCon = agentCon
 
-        net = neat.nn.recurrent.RecurrentNetwork.create(genome, config)
-        currentMaxFitness = 0
-        currentFitness = 0
-        counter = 0
+    def eval_genomes(self, genomes, config):
+        for genome_id, genome in genomes:
 
-        done = False
+            net = neat.nn.recurrent.RecurrentNetwork.create(genome, config)
+            currentMaxFitness = 0
+            currentFitness = 0
+            counter = 0
 
-        while not done:
-            screen = agentConnect.getScreen()
-            nnOutput = net.activate(screen)
-            agentConnect.outputToControl(nnOutput)
-            currentFitness = agentConnect.getFitness()
+            done = False
 
-            if currentFitness > currentMaxFitness:
-                currentMaxFitness = currentFitness
-                counter = 0
-            else:
-                counter += 1
+            while not done:
+                screen = agentConnect.getScreen()
+                nnOutput = net.activate(screen)
+                agentConnect.outputToControl(nnOutput)
+                currentFitness = agentConnect.getFitness()
 
-            if currentFitness == 10 or counter >= 250:
-                done = True
-                print(genome_id, currentFitness)
+                if currentFitness > currentMaxFitness:
+                    currentMaxFitness = currentFitness
+                    counter = 0
+                else:
+                    counter += 1
 
-def start():
-    config = neat.Config(neat.DefaultGenome, neat.DefaultReproduction,
-                         neat.DefaultSpeciesSet, neat.DefaultStagnation,
-                         'config-feedforward')
-    p = neat.Population(config)
+                if currentFitness == 10 or counter >= 250:
+                    done = True
+                    print(genome_id, currentFitness)
 
-    p.add_reporter(neat.StdOutReporter(True))
-    stats = neat.StatisticsReporter()
-    p.add_reporter(stats)
-    p.add_reporter(neat.Checkpointer(10))
+    def start(agentCon):
+        config = neat.Config(neat.DefaultGenome, neat.DefaultReproduction,
+                             neat.DefaultSpeciesSet, neat.DefaultStagnation,
+                             'config-feedforward')
+        p = neat.Population(config)
 
-    winner = p.run(eval_genomes, 50)
+        p.add_reporter(neat.StdOutReporter(True))
+        stats = neat.StatisticsReporter()
+        p.add_reporter(stats)
+        p.add_reporter(neat.Checkpointer(10))
+
+        winner = p.run(eval_genomes, 5)
 

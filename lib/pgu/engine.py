@@ -5,8 +5,8 @@ from pygame.locals import *
 import inspect
 import sys, os
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-import agent
-from agentConnect import agentConnect
+from agent import Agent
+from agentConnect import AgentConnect
 
 
 class State:
@@ -88,6 +88,7 @@ class Game:
     """
     def __init__(self):
         self.agentCon = None
+        self.agent = None
 
     def fnc(self, f, v=None): #MYNOTE use to run function f of self.state with v attr
         s = self.state
@@ -123,8 +124,12 @@ class Game:
 
         self.init()
         #agent.start()
-        self.agentCon = agentConnect(self.state)
+        self.agentCon = AgentConnect(self.state)
+        self.agent = Agent(self.agentCon)
 
+        self.loopStart()
+
+    def loopStart(self):
         while not self.quit:
             self.loop() #MYNOTE here is the first mainloop
             grid = self.agentCon.dataToInput()
