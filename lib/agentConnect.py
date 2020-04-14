@@ -17,11 +17,15 @@ class AgentConnect:
         return self.grid
 
     def getFitness(self):
+        if not hasattr(self.level,'currentFitness'): return None
         return self.level.currentFitness
 
     def getLvStatus(self):
-        if hasattr(self.level,'status'): return self.level.status
-        return None
+        if not hasattr(self.level,'status'): return None
+        return self.level.status
+
+    def setLevel(self,levelIn):
+        self.level = levelIn
 
     def dataToInput(self):
         if hasattr(self.level, 'tilesData'): tileList = self.level.tilesData

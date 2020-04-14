@@ -102,6 +102,7 @@ class Game:
         if r != None: #MYNOTE change state to result
             self.state = r
             self.state._paint = 1
+            self.agentCon.setLevel(self.state)
             return 1
         # except:
         #    import traceback; traceback.print_exc()
@@ -133,8 +134,11 @@ class Game:
         while not self.quit:
             self.loop() #MYNOTE here is the first mainloop
             grid = self.agentCon.dataToInput()
-            print("----------------------------------\n" + "\r" + str(grid))
-            print self.agentCon.getFitness()
+            if grid is not None:
+                print("----------------------------------\n" + "\r" + str(grid))
+            fitness = self.agentCon.getFitness()
+            if fitness is not None:
+                print fitness
 
     def loop(self):
         s = self.state # default state of Game is Level
