@@ -12,6 +12,9 @@ class AgentConnect:
         self.grid = np.zeros((SH / TH, SW / TW))
         self.currentFitness = 0.1
         self.level = levelIn
+        if hasattr(self.level,'setAgentCon'):
+            self.level.setAgentCon(self)
+        self.isGameEnd = 0
 
     def getScreen(self):
         return self.grid
@@ -26,6 +29,9 @@ class AgentConnect:
 
     def setLevel(self,levelIn):
         self.level = levelIn
+
+    def setGameEnd(self):
+        self.isGameEnd = 1
 
     def dataToInput(self):
         if hasattr(self.level, 'tilesData'): tileList = self.level.tilesData
@@ -168,7 +174,7 @@ def fitnessF(playerPos, levelName):
                 fit = calculateFitness(calculateDistance(playerX, playerY, 156, 27))
                 if fit == 3:
                     return  10#10 fitness is finish level
-                return fit
+                return fit+2
 
 
         elif levelName == 'Jungle - 2':

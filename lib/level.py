@@ -80,11 +80,13 @@ class Level:
         self.game = game
         self.fname = fname
         self.parent = parent
+
         self.currentFitness = 0.1
         self.tilesData = []
         self.spritesData = []
         self.playerSprite = None
         self.playerPos = None
+        self.agentCon = None
 
     def init(self):
         #self._tiles = load_tiles(data.filepath('tiles.tga'))
@@ -441,24 +443,32 @@ class Level:
             self.game.lcur = (self.game.lcur + 1) % len(levels.LEVELS)
             if self.game.lcur == 0:
                 # you really won!!!
-                self.game.music_play('finish')
-                next = menu.Transition(self.game,self.parent)
-                return menu.Pause(self.game,'CONGRATULATIONS!',next)
-                
+                # self.game.music_play('finish')
+                # next = menu.Transition(self.game,self.parent)
+                # return menu.Pause(self.game,'CONGRATULATIONS!',next)
+                next = menu.Transition(self.game, self.parent)
+                return menu.Pause(self.game, 'GAME END', next)
+
             else:
-                self.game.music_play('lvlwin',1)
-                l2 = Level(self.game,self.fname,self.parent)
-                next = menu.Transition(self.game,l2)
-                return menu.Pause(self.game,'good job!',next)
+                # self.game.music_play('lvlwin',1)
+                # l2 = Level(self.game,self.fname,self.parent)
+                # next = menu.Transition(self.game,l2)
+                # return menu.Pause(self.game,'good job!',next)
+                next = menu.Transition(self.game, self.parent)
+                return menu.Pause(self.game, 'GAME END', next)
                 
                 
         elif self.status == 'dead':
-            if self.game.lives:
-                self.game.lives -= 1
-                return menu.Transition(self.game,Level(self.game,self.fname,self.parent))
-            else:
-                next = menu.Transition(self.game,self.parent) 
-                return menu.Pause(self.game,'game over',next)
+            if self.agentCon is not None:
+                self.agentCon.setGameEnd()
+            # if self.game.lives:
+            #     self.game.lives -= 1
+            #     return menu.Transition(self.game,Level(self.game,self.fname,self.parent))
+            # else:
+            #     next = menu.Transition(self.game,self.parent)
+            #     return menu.Pause(self.game,'game over',next)
+            next = menu.Transition(self.game, self.parent)
+            return menu.Pause(self.game, 'GAME END', next)
         elif self.status == 'transition':
             self.status = None
             return menu.Transition(self.game,self)
@@ -531,4 +541,7 @@ class Level:
         c = (255,255,255)
         img = fnt.render(text,1,c)
         blit(img,(x,y)) ; blit(img,(x,y))
+
+    def setAgentCon(self, agentConIn):
+        self.agentCon = agentConIn
 

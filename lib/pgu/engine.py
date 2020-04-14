@@ -139,6 +139,8 @@ class Game:
             fitness = self.agentCon.getFitness()
             if fitness is not None:
                 print fitness
+            if self.agentCon.isGameEnd:
+                break
 
     def loop(self):
         s = self.state # default state of Game is Level
