@@ -33,6 +33,10 @@ class AgentConnect:
     def setGameEnd(self):
         self.isGameEnd = 1
 
+    def getNotImprovedLoop(self):
+        if not hasattr(self.level,'notImproved'): return None
+        return self.level.notImproved
+
     def getScreen(self):
         if hasattr(self.level, 'tilesData'): tileList = self.level.tilesData
         else: return None

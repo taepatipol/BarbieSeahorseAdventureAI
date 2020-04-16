@@ -20,6 +20,7 @@ import data
 import menu
 import level
 import neat
+import pickle
 
 from agentConnect import AgentConnect
 global levelName
@@ -128,7 +129,7 @@ class Game(engine.Game):
             
             pygame.mixer.init()
         except:
-            print 'mixer not initialized'
+            #print 'mixer not initialized'
         
         self._music_name = None
         
@@ -307,13 +308,15 @@ class Game(engine.Game):
                 #     print("----------------------------------\n" + "\r" + str(grid))
                 if grid is not None:
                     move = nn.activate(grid.flatten())
-                    print move
+                    #print move
                     self.agentCon.outputToControl(move)
                 self.loop()
                 fitness = self.agentCon.getFitness()
                 if fitness is not None:
                     #print fitness
                     if fitness > bestFitness: bestFitness = fitness
+                if self.agentCon.getNotImprovedLoop() >= 1000:
+                    break
                 if self.agentCon.isGameEnd:
                     #print "a game ended"
                     break
@@ -399,7 +402,10 @@ def main():
         stats = neat.StatisticsReporter()
         p.add_reporter(stats)
         p.add_reporter(neat.Checkpointer(10))
-        winner = p.run(eval_genomes, 10)
+        winner = p.run(eval_genomes)
+
+        with open('winner.pkl', 'wb') as output:
+            pickle.dump(winner, output, 1)
 
     print("stop running")
 

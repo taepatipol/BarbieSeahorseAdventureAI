@@ -82,11 +82,13 @@ class Level:
         self.parent = parent
 
         self.currentFitness = 0
+        self.bestFitness = 0
         self.tilesData = []
         self.spritesData = []
         self.playerSprite = None
         self.playerPos = None
         self.agentCon = None
+        self.notImproved = 0
 
     def init(self):
         #self._tiles = load_tiles(data.filepath('tiles.tga'))
@@ -405,6 +407,8 @@ class Level:
         if self.playerSprite != None:
             self.playerPos = [self.playerSprite.rect.centerx, self.playerSprite.rect.centery]
         self.currentFitness = agentConnect.fitnessF(self.playerPos, self.title)
+        if self.currentFitness > self.bestFitness:
+            self.bestFitness = self.currentFitness
 
 
         if self.currentFitness % 1 == 0:
@@ -431,6 +435,9 @@ class Level:
             #print 'codes:',len(self.codes)
             
         #handle various game status'
+        if self.currentFitness <= self.bestFitness:
+            self.notImproved += 1
+
         if self.status == '_first':
             if self.player.exploded:
                 self.player.loop(self,self.player)
