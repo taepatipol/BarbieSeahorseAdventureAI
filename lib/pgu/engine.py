@@ -109,7 +109,7 @@ class Game:
 
         return 0 #if 1 it will infinite loop with black screen
 
-    def run(self, state, screen=None):
+    def run(self, state, net=None):
         """Run the state engine, this is a infinite loop (until a quit occurs).
         
         <pre>Game.run(state,screen=None)</pre>
@@ -121,67 +121,13 @@ class Game:
         """
         self.quit = 0
         self.state = state
-        if screen != None: self.screen = screen
+        #if screen != None: self.screen = screen
 
         self.init()
-        #agent.start()
-        self.agentCon = AgentConnect(self.state)
-        #self.agent = Agent(self.agentCon)
 
-        best = self.loopStart()
-        print 'the best fitness: '+ str(best)
-
-    def loopStart(self):
-        bestFitness = 0
-        while not self.quit:
-            self.loop() #MYNOTE here is the first mainloop
-            grid = self.agentCon.getScreen()
-            if grid is not None:
-                print("----------------------------------\n" + "\r" + str(grid))
-            fitness = self.agentCon.getFitness()
-            if fitness is not None:
-                print fitness
-                if fitness > bestFitness: bestFitness = fitness
-            if self.agentCon.isGameEnd:
-                break
-        return bestFitness
-
-    def loop(self):
-        s = self.state # default state of Game is Level
-        # MYNOTE regular loop without state change fnc will return 0
-        if not hasattr(s, '_init') or s._init:
-            s._init = 0
-            if self.fnc('init'): return
-        else:
-            if self.fnc('loop'):
-                #this will run when transition
-                return
-        if not hasattr(s, '_paint') or s._paint:
-            s._paint = 0
-            if self.fnc('paint', self.screen): return
-        else:
-            if self.fnc('update', self.screen): return
-
-        for e in pygame.event.get():
-            # NOTE: this might break API?
-            # if self.event(e): return
-            if not self.event(e):
-                if self.fnc('event', e): return
-
-        #TODO
-        #testEvent = pygame.event.Event(USEREVENT,{'action':'right'})
-        #pygame.event.post(testEvent)
-
-        # stack = inspect.stack()
-        # the_class = stack[1][0].f_locals["self"].__class__.__name__
-        # the_method = stack[1][0].f_code.co_name
-        #
-        # print("I was called by {}.{}()".format(the_class, the_method))
-
-
-        self.tick()
-
-        return
+        best = self.loopStart(net)
+        #print 'the best fitness: '+ str(best)
+        return best
 
     def init(self):
         """Template Method - called at the beginning of State.run() to initialize things.

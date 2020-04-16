@@ -96,22 +96,22 @@ class AgentConnect:
         actionsList = al
 
         # if left
-        if actionsList[0]:
+        if actionsList[0] >= 0.5:
             leftEvent = pygame.event.Event(USEREVENT, {'action': 'left'})
             pygame.event.post(leftEvent)
 
         # if right
-        if actionsList[1]:
+        if actionsList[1] >= 0.5:
             rightEvent = pygame.event.Event(USEREVENT, {'action': 'right'})
             pygame.event.post(rightEvent)
 
         # if jump
-        if actionsList[2]:
+        if actionsList[2] >= 0.5:
             jumpEvent = pygame.event.Event(USEREVENT, {'action': 'jump'})
             pygame.event.post(jumpEvent)
 
         # if shoot
-        if actionsList[3]:
+        if actionsList[3] >= 0.5:
             shootEvent = pygame.event.Event(USEREVENT, {'action': 'bubble'})
             pygame.event.post(shootEvent)
 

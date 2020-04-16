@@ -19,10 +19,14 @@ from cnst import *
 import data
 import menu
 import level
+import neat
 
-import agentConnect
+from agentConnect import AgentConnect
 global levelName
 global fname
+global bestFitness
+global AGENT_ACTIVE
+AGENT_ACTIVE = 1
 
 class Input:
     def __init__(self):
@@ -58,6 +62,9 @@ class Game(engine.Game):
         
         self.init_play()
         self.lcur = 0
+
+        if AGENT_ACTIVE == 1:
+            self.agentCon = AgentConnect(self.state)
 
         self.scale2x = SCALE2X
         if '-scale2x' in sys.argv:
@@ -276,6 +283,73 @@ class Game(engine.Game):
                 return 1
             except:
                 pass
+    # Below moved from engine.py ----------------------------------------------------
+    def loopStart(self,net=None):
+        bestFitness = 0
+        if AGENT_ACTIVE == 0:
+            self.agentCon = AgentConnect(self.state)
+            while not self.quit:
+                self.loop()  # MYNOTE here is the first mainloop
+                grid = self.agentCon.getScreen()
+                if grid is not None:
+                    print("----------------------------------\n" + "\r" + str(grid))
+                fitness = self.agentCon.getFitness()
+                if fitness is not None:
+                    print fitness
+                    if fitness > bestFitness: bestFitness = fitness
+                if self.agentCon.isGameEnd:
+                    break
+        if AGENT_ACTIVE == 1:
+            nn = net
+            while not self.quit:
+                grid = self.agentCon.getScreen()
+                # if grid is not None:
+                #     print("----------------------------------\n" + "\r" + str(grid))
+                if grid is not None:
+                    move = nn.activate(grid.flatten())
+                    print move
+                    self.agentCon.outputToControl(move)
+                self.loop()
+                fitness = self.agentCon.getFitness()
+                if fitness is not None:
+                    #print fitness
+                    if fitness > bestFitness: bestFitness = fitness
+                if self.agentCon.isGameEnd:
+                    #print "a game ended"
+                    break
+
+
+
+
+        return bestFitness
+
+    def loop(self):
+        s = self.state # default state of Game is Level
+        # MYNOTE regular loop without state change fnc will return 0
+        if not hasattr(s, '_init') or s._init:
+            s._init = 0
+            if self.fnc('init'): return
+        else:
+            if self.fnc('loop'):
+                #this will run when transition
+                return
+        if not hasattr(s, '_paint') or s._paint:
+            s._paint = 0
+            if self.fnc('paint', self.screen): return
+        else:
+            if self.fnc('update', self.screen): return
+
+        for e in pygame.event.get():
+            # NOTE: this might break API?
+            # if self.event(e): return
+            if not self.event(e):
+                if self.fnc('event', e): return
+
+        # testEvent = pygame.event.Event(USEREVENT,{'action':'right'})
+        # pygame.event.post(testEvent)
+        self.tick()
+
+        return
 
 
 
@@ -284,16 +358,21 @@ def main():
     #print data.load('sample.txt').read()
     
     #fname = None #data.filepath(os.path.join('levels','test.tga'))
+    global levelName
     levelName = None
+    global fname
     fname = None
     for v in sys.argv:
         if 'lv' in v:
             levelName = v
             
-    g = Game()
-    g.init()
-    l = l2 = menu.Menu(g) # TODO check if it return level
+    if AGENT_ACTIVE == 0:
+        g = Game()
+        g.init()
+        l = l2 = menu.Menu(g)
+
     #l = menu.Intro(g,l2)
+
     if levelName != None:
         if levelName == 'lv-j1': fname = 'data/levels/phil_1.tga'
         if levelName == 'lv-j2': fname = 'data/levels/phil_7.tga'
@@ -307,14 +386,28 @@ def main():
         if levelName == 'lv-m2': fname = 'data/levels/phil_5.tga'
         if levelName == 'lv-m3': fname = 'data/levels/phil_9.tga'
         if levelName == 'lv-boss': fname = 'data/levels/boss_1.tga'
-        l = level.Level(g,fname,engine.Quit(g)) #MYCOMMENT CAN COMMENT THIS AND PLAY GAME LIKE NORMAL
-    g.run(l)#MYCOMMENT game run menu  !! l is the g.state
+        if AGENT_ACTIVE == 0: l = level.Level(g,fname,engine.Quit(g)) #MYCOMMENT CAN COMMENT THIS AND PLAY GAME LIKE NORMAL
+    if AGENT_ACTIVE == 0:
+        g.run(l)#MYCOMMENT game run menu  !! l is the g.state
+    if AGENT_ACTIVE == 1:
+        config = neat.Config(neat.DefaultGenome, neat.DefaultReproduction,
+                             neat.DefaultSpeciesSet, neat.DefaultStagnation,
+                             'config-feedforward')
+        p = neat.Population(config)
+
+        p.add_reporter(neat.StdOutReporter(True))
+        stats = neat.StatisticsReporter()
+        p.add_reporter(stats)
+        p.add_reporter(neat.Checkpointer(10))
+        winner = p.run(eval_genomes, 10)
+
     print("stop running")
 
 def eval_genomes(genomes, config):
     for genome_id, genome in genomes:
         g = Game()
-        g.init()
-        l = level.Level(g,fname,engine.Quit(g))
-        g.run(l)
+        l = level.Level(g, fname, engine.Quit(g))
+        net = neat.nn.recurrent.RecurrentNetwork.create(genome, config)
+        bestFitness = g.run(l,net) # run in order eval_genomes -> run -> loopStart
+        genome.fitness = bestFitness
 

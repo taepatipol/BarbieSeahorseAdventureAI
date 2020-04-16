@@ -10,7 +10,7 @@ def init(g,r,p, big=False):
     if g.bubble_count >= 3:
         return None
     g.bubble_count += 1
-    print 'new bubble', g.bubble_count
+    #print 'new bubble', g.bubble_count
     if not big:
         s = sprite.Sprite3(g,r,'bubble',(0,0,7,7))
     else:
@@ -43,7 +43,7 @@ def init(g,r,p, big=False):
     return s
 
 def deinit(g,s):
-    print "bubble deinit"
+    #print "bubble deinit"
     g.bubble_count -= 1
     
 def loop(g,s):
