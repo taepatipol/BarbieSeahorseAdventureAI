@@ -5,8 +5,8 @@ from pygame.locals import *
 import inspect
 import sys, os
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-from agent import Agent
 from agentConnect import AgentConnect
+import neat
 
 
 class State:
@@ -126,21 +126,25 @@ class Game:
         self.init()
         #agent.start()
         self.agentCon = AgentConnect(self.state)
-        self.agent = Agent(self.agentCon)
+        #self.agent = Agent(self.agentCon)
 
-        self.loopStart()
+        best = self.loopStart()
+        print 'the best fitness: '+ str(best)
 
     def loopStart(self):
+        bestFitness = 0
         while not self.quit:
             self.loop() #MYNOTE here is the first mainloop
-            grid = self.agentCon.dataToInput()
+            grid = self.agentCon.getScreen()
             if grid is not None:
                 print("----------------------------------\n" + "\r" + str(grid))
             fitness = self.agentCon.getFitness()
             if fitness is not None:
                 print fitness
+                if fitness > bestFitness: bestFitness = fitness
             if self.agentCon.isGameEnd:
                 break
+        return bestFitness
 
     def loop(self):
         s = self.state # default state of Game is Level

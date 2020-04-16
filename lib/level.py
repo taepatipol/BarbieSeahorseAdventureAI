@@ -81,7 +81,7 @@ class Level:
         self.fname = fname
         self.parent = parent
 
-        self.currentFitness = 0.1
+        self.currentFitness = 0
         self.tilesData = []
         self.spritesData = []
         self.playerSprite = None
@@ -400,7 +400,7 @@ class Level:
                 if s.type == 'player': self.playerSprite = s
             self.spritesData.append(spriteData)
 
-        # agentConnect.dataToInput(tilesData, spritesData,screenView.left,screenView.top)
+        # agentConnect.getScreen(tilesData, spritesData,screenView.left,screenView.top)
 
         if self.playerSprite != None:
             self.playerPos = [self.playerSprite.rect.centerx, self.playerSprite.rect.centery]

@@ -17,8 +17,12 @@ from pgu import engine
 
 from cnst import *
 import data
+import menu
+import level
 
 import agentConnect
+global levelName
+global fname
 
 class Input:
     def __init__(self):
@@ -279,31 +283,38 @@ def main():
     #print "Hello from your game's main()"
     #print data.load('sample.txt').read()
     
-    fname = None #data.filepath(os.path.join('levels','test.tga'))
+    #fname = None #data.filepath(os.path.join('levels','test.tga'))
+    levelName = None
+    fname = None
     for v in sys.argv:
         if 'lv' in v:
-            fname = v
+            levelName = v
             
     g = Game()
     g.init()
-
-    import menu
     l = l2 = menu.Menu(g) # TODO check if it return level
     #l = menu.Intro(g,l2)
-    if fname != None:
-        if fname == 'lv-j1': fname = 'data/levels/phil_1.tga'
-        if fname == 'lv-j2': fname = 'data/levels/phil_7.tga'
-        if fname == 'lv-j3': fname = 'data/levels/tee_1.tga'
-        if fname == 'lv-j4': fname = 'data/levels/phil_2.tga'
-        if fname == 'lv-v1': fname = 'data/levels/fydo_1.tga'
-        if fname == 'lv-v2': fname = 'data/levels/tim_1.tga'
-        if fname == 'lv-v3': fname = 'data/levels/pekuja_2.tga'
-        if fname == 'lv-b': fname = 'data/levels/phil_8.tga'
-        if fname == 'lv-m1': fname = 'data/levels/pekuja_1.tga'
-        if fname == 'lv-m2': fname = 'data/levels/phil_5.tga'
-        if fname == 'lv-m3': fname = 'data/levels/phil_9.tga'
-        if fname == 'lv-boss': fname = 'data/levels/boss_1.tga'
-        import level
+    if levelName != None:
+        if levelName == 'lv-j1': fname = 'data/levels/phil_1.tga'
+        if levelName == 'lv-j2': fname = 'data/levels/phil_7.tga'
+        if levelName == 'lv-j3': fname = 'data/levels/tee_1.tga'
+        if levelName == 'lv-j4': fname = 'data/levels/phil_2.tga'
+        if levelName == 'lv-v1': fname = 'data/levels/fydo_1.tga'
+        if levelName == 'lv-v2': fname = 'data/levels/tim_1.tga'
+        if levelName == 'lv-v3': fname = 'data/levels/pekuja_2.tga'
+        if levelName == 'lv-b': fname = 'data/levels/phil_8.tga'
+        if levelName == 'lv-m1': fname = 'data/levels/pekuja_1.tga'
+        if levelName == 'lv-m2': fname = 'data/levels/phil_5.tga'
+        if levelName == 'lv-m3': fname = 'data/levels/phil_9.tga'
+        if levelName == 'lv-boss': fname = 'data/levels/boss_1.tga'
         l = level.Level(g,fname,engine.Quit(g)) #MYCOMMENT CAN COMMENT THIS AND PLAY GAME LIKE NORMAL
     g.run(l)#MYCOMMENT game run menu  !! l is the g.state
     print("stop running")
+
+def eval_genomes(genomes, config):
+    for genome_id, genome in genomes:
+        g = Game()
+        g.init()
+        l = level.Level(g,fname,engine.Quit(g))
+        g.run(l)
+

@@ -10,13 +10,13 @@ class AgentConnect:
 
     def __init__(self,levelIn):
         self.grid = np.zeros((SH / TH, SW / TW))
-        self.currentFitness = 0.1
+        self.currentFitness = 0.000001
         self.level = levelIn
         if hasattr(self.level,'setAgentCon'):
             self.level.setAgentCon(self)
         self.isGameEnd = 0
 
-    def getScreen(self):
+    def getGrid(self):
         return self.grid
 
     def getFitness(self):
@@ -33,7 +33,7 @@ class AgentConnect:
     def setGameEnd(self):
         self.isGameEnd = 1
 
-    def dataToInput(self):
+    def getScreen(self):
         if hasattr(self.level, 'tilesData'): tileList = self.level.tilesData
         else: return None
         if hasattr(self.level, 'spritesData'): spriteList = self.level.spritesData
@@ -179,4 +179,4 @@ def fitnessF(playerPos, levelName):
 
         elif levelName == 'Jungle - 2':
             pass
-    return 0.1
+    return 0
