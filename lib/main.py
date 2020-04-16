@@ -129,6 +129,7 @@ class Game(engine.Game):
             
             pygame.mixer.init()
         except:
+            pass
             #print 'mixer not initialized'
         
         self._music_name = None
@@ -402,7 +403,7 @@ def main():
         stats = neat.StatisticsReporter()
         p.add_reporter(stats)
         p.add_reporter(neat.Checkpointer(10))
-        winner = p.run(eval_genomes)
+        winner = p.run(eval_genomes, 20)
 
         with open('winner.pkl', 'wb') as output:
             pickle.dump(winner, output, 1)
