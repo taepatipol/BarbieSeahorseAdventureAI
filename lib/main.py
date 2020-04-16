@@ -28,6 +28,7 @@ global fname
 global bestFitness
 global AGENT_ACTIVE
 AGENT_ACTIVE = 1
+USING_CHECKPOINT = 1
 
 class Input:
     def __init__(self):
@@ -394,15 +395,24 @@ def main():
     if AGENT_ACTIVE == 0:
         g.run(l)#MYCOMMENT game run menu  !! l is the g.state
     if AGENT_ACTIVE == 1:
-        config = neat.Config(neat.DefaultGenome, neat.DefaultReproduction,
-                             neat.DefaultSpeciesSet, neat.DefaultStagnation,
-                             'config-feedforward')
-        p = neat.Population(config)
+        if USING_CHECKPOINT == 0:
+            config = neat.Config(neat.DefaultGenome, neat.DefaultReproduction,
+                                 neat.DefaultSpeciesSet, neat.DefaultStagnation,
+                                 'config-feedforward')
+            p = neat.Population(config)
 
-        p.add_reporter(neat.StdOutReporter(True))
-        stats = neat.StatisticsReporter()
-        p.add_reporter(stats)
-        p.add_reporter(neat.Checkpointer(10))
+            p.add_reporter(neat.StdOutReporter(True))
+            stats = neat.StatisticsReporter()
+            p.add_reporter(stats)
+            p.add_reporter(neat.Checkpointer(10))
+
+        if USING_CHECKPOINT == 1:
+            p = neat.Checkpointer.restore_checkpoint('neat-checkpoint-19')
+            p.add_reporter(neat.StdOutReporter(True))
+            stats = neat.StatisticsReporter()
+            p.add_reporter(stats)
+            p.add_reporter(neat.Checkpointer(10))
+
         winner = p.run(eval_genomes, 20)
 
         with open('winner.pkl', 'wb') as output:
