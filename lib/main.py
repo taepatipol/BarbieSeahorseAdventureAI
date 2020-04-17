@@ -404,14 +404,13 @@ def main():
             p.add_reporter(neat.StdOutReporter(True))
             stats = neat.StatisticsReporter()
             p.add_reporter(stats)
-            p.add_reporter(neat.Checkpointer(10))
-
+            p.add_reporter(neat.Checkpointer(10,filename_prefix='checkpoint-3output-'))
         if USING_CHECKPOINT == 1:
-            p = neat.Checkpointer.restore_checkpoint('neat-checkpoint-19')
+            p = neat.Checkpointer.restore_checkpoint('neat-checkpoint-37')
             p.add_reporter(neat.StdOutReporter(True))
             stats = neat.StatisticsReporter()
             p.add_reporter(stats)
-            p.add_reporter(neat.Checkpointer(10))
+            p.add_reporter(neat.Checkpointer(10,filename_prefix='checkpoint-3output-'))
 
         winner = p.run(eval_genomes, 20)
 
