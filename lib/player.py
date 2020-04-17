@@ -81,12 +81,12 @@ def event(g,s,e):
     #MYCODE
     if e.type is USEREVENT and e.action == 'right':
         if s.vx < 2:
-            s.vx += 4
+            s.vx += 1
         s.facing = 'right'
         #s.vx -= 1
     if e.type is USEREVENT and e.action == 'left':
         if s.vx > -2:
-            s.vx -= 4
+            s.vx -= 1
         s.facing = 'left'
 
         

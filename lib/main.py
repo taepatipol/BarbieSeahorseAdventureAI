@@ -28,7 +28,8 @@ global fname
 global bestFitness
 global AGENT_ACTIVE
 AGENT_ACTIVE = 1
-USING_CHECKPOINT = 1
+USING_CHECKPOINT = 0
+runFile = 'checkpoint-3output-9'
 
 class Input:
     def __init__(self):
@@ -404,15 +405,15 @@ def main():
             p.add_reporter(neat.StdOutReporter(True))
             stats = neat.StatisticsReporter()
             p.add_reporter(stats)
-            p.add_reporter(neat.Checkpointer(10,filename_prefix='checkpoint-3output-'))
+            p.add_reporter(neat.Checkpointer(5,filename_prefix='checkpoint-3output-'))
         if USING_CHECKPOINT == 1:
-            p = neat.Checkpointer.restore_checkpoint('neat-checkpoint-37')
+            p = neat.Checkpointer.restore_checkpoint(runFile)
             p.add_reporter(neat.StdOutReporter(True))
             stats = neat.StatisticsReporter()
             p.add_reporter(stats)
-            p.add_reporter(neat.Checkpointer(10,filename_prefix='checkpoint-3output-'))
+            p.add_reporter(neat.Checkpointer(5,filename_prefix='checkpoint-3output-'))
 
-        winner = p.run(eval_genomes, 20)
+        winner = p.run(eval_genomes)
 
         with open('winner.pkl', 'wb') as output:
             pickle.dump(winner, output, 1)

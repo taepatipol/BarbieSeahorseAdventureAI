@@ -60,7 +60,7 @@ class AgentConnect:
             gridY = int(math.floor(y / TH))
             if gridX >= 0 and gridX < SW / TW and gridY >= 0 and gridY < SH / TH:
                 if 'solid' not in hitGroups and 'standable' not in hitGroups: continue
-                self.grid[gridY, gridX] = 9
+                self.grid[gridY, gridX] = 31
         # hitfile.close()
 
         for spriteCo in spriteList:
@@ -73,21 +73,21 @@ class AgentConnect:
             if gridX >= 0 and gridX < SW / TW and gridY >= 0 and gridY < SH / TH:
                 dict = {
                     'player': 1,
-                    'parrot': 8,
-                    'bubble': 2,
-                    'capsule': 3,
-                    'door': 4,
-                    'fireball': 7,
-                    'fireguy': 8,
-                    'frog': 8,
-                    'laser': 7,
-                    'panda': 8,
-                    'platform': 3,
-                    'robo': 8,
-                    'shootbot': 8,
-                    'brobo': 8,
-                    'spikey': 7,
-                    'blob': 8
+                    'parrot': 81,
+                    'bubble': 20,
+                    'capsule': 32,
+                    'door': 40,
+                    'fireball': 71,
+                    'fireguy': 82,
+                    'frog': 83,
+                    'laser': 72,
+                    'panda': 84,
+                    'platform': 33,
+                    'robo': 85,
+                    'shootbot': 86,
+                    'brobo': 87,
+                    'spikey': 73,
+                    'blob': 88
                 }
                 self.grid[gridY, gridX] = dict.get(type, 99)
 
