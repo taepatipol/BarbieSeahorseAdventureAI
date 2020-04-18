@@ -21,6 +21,7 @@ import menu
 import level
 import neat
 import pickle
+import numpy as np
 
 from agentConnect import AgentConnect
 global levelName
@@ -29,7 +30,8 @@ global bestFitness
 global AGENT_ACTIVE
 AGENT_ACTIVE = 1
 USING_CHECKPOINT = 0
-runFile = 'checkpoint-3output-9'
+FILE_PREFIX = 'checkpoint-videoIn-'
+runFile = 'checkpoint-videoIn-10'
 
 class Input:
     def __init__(self):
@@ -301,6 +303,7 @@ class Game(engine.Game):
                 if fitness is not None:
                     print fitness
                     if fitness > bestFitness: bestFitness = fitness
+                print self.agentCon.getPlayerPos()
                 if self.agentCon.isGameEnd:
                     break
         if AGENT_ACTIVE == 1:
@@ -310,7 +313,11 @@ class Game(engine.Game):
                 # if grid is not None:
                 #     print("----------------------------------\n" + "\r" + str(grid))
                 if grid is not None:
-                    move = nn.activate(grid.flatten())
+                    #input power up status
+                    poweredUp = self.agentCon.getPlayerPowerUp()
+                    if poweredUp is None or not poweredUp: grid.append(0)
+                    else: grid.append(99)
+                    move = nn.activate(grid)
                     #print move
                     self.agentCon.outputToControl(move)
                 self.loop()
@@ -392,6 +399,7 @@ def main():
         if levelName == 'lv-m2': fname = 'data/levels/phil_5.tga'
         if levelName == 'lv-m3': fname = 'data/levels/phil_9.tga'
         if levelName == 'lv-boss': fname = 'data/levels/boss_1.tga'
+        if levelName == 'lv-test': fname = 'data/levels/test.tga'
         if AGENT_ACTIVE == 0: l = level.Level(g,fname,engine.Quit(g)) #MYCOMMENT CAN COMMENT THIS AND PLAY GAME LIKE NORMAL
     if AGENT_ACTIVE == 0:
         g.run(l)#MYCOMMENT game run menu  !! l is the g.state
@@ -401,22 +409,19 @@ def main():
                                  neat.DefaultSpeciesSet, neat.DefaultStagnation,
                                  'config-feedforward')
             p = neat.Population(config)
-
             p.add_reporter(neat.StdOutReporter(True))
             stats = neat.StatisticsReporter()
             p.add_reporter(stats)
-            p.add_reporter(neat.Checkpointer(5,filename_prefix='checkpoint-3output-'))
+            p.add_reporter(neat.Checkpointer(5,filename_prefix=FILE_PREFIX))
+
         if USING_CHECKPOINT == 1:
             p = neat.Checkpointer.restore_checkpoint(runFile)
             p.add_reporter(neat.StdOutReporter(True))
             stats = neat.StatisticsReporter()
             p.add_reporter(stats)
-            p.add_reporter(neat.Checkpointer(5,filename_prefix='checkpoint-3output-'))
+            p.add_reporter(neat.Checkpointer(5,filename_prefix=FILE_PREFIX))
 
         winner = p.run(eval_genomes)
-
-        with open('winner.pkl', 'wb') as output:
-            pickle.dump(winner, output, 1)
 
     print("stop running")
 

@@ -5,12 +5,16 @@ import math
 from cnst import *
 import sys
 import os
+from collections import deque
 
 class AgentConnect:
 
     def __init__(self,levelIn):
-        self.grid = np.zeros((SH / TH, SW / TW))
-        self.currentFitness = 0.000001
+        grid = np.zeros((SH / TH, SW / TW)).flatten()
+        self.gridHistory = deque()
+        for i in range(24):
+            self.gridHistory.append(grid)
+        self.currentFitness = 0
         self.level = levelIn
         if hasattr(self.level,'setAgentCon'):
             self.level.setAgentCon(self)
@@ -37,6 +41,15 @@ class AgentConnect:
         if not hasattr(self.level,'notImproved'): return None
         return self.level.notImproved
 
+    def getPlayerPos(self):
+        if not hasattr(self.level,'playerPos'): return None
+        return self.level.playerPos
+
+    def getPlayerPowerUp(self):
+        if not hasattr(self.level,'playerSprite'): return None
+        if not hasattr(self.level.playerSprite,'powered_up'): return None
+        return self.level.playerSprite.powered_up
+
     def getScreen(self):
         if hasattr(self.level, 'tilesData'): tileList = self.level.tilesData
         else: return None
@@ -49,7 +62,7 @@ class AgentConnect:
         # np.set_printoptions(threshold=sys.maxsize)
         # print(grid)
         # hitfile = open(r"D:\study\senior\toba_bubble_kong-1.0\hitgroups.txt","w+")
-        self.grid = np.zeros((SH / TH, SW / TW))
+        currentGrid = np.zeros((SH / TH, SW / TW))
 
         for tileCo in tileList:
             if len(tileCo) < 2: continue
@@ -60,7 +73,7 @@ class AgentConnect:
             gridY = int(math.floor(y / TH))
             if gridX >= 0 and gridX < SW / TW and gridY >= 0 and gridY < SH / TH:
                 if 'solid' not in hitGroups and 'standable' not in hitGroups: continue
-                self.grid[gridY, gridX] = 31
+                currentGrid[gridY, gridX] = 31
         # hitfile.close()
 
         for spriteCo in spriteList:
@@ -89,10 +102,18 @@ class AgentConnect:
                     'spikey': 73,
                     'blob': 88
                 }
-                self.grid[gridY, gridX] = dict.get(type, 99)
+                currentGrid[gridY, gridX] = dict.get(type, 99)
 
         #print("----------------------------------\n" + "\r" + str(self.grid))
-        return self.grid
+        self.gridHistory.rotate(-1)
+        self.gridHistory[23] = currentGrid.flatten()
+
+        out = []
+        i = 0
+        for grid in self.gridHistory:
+            if i % 4 == 3: out.extend(grid)
+            i += 1
+        return out
 
 
     def outputToControl(self, al):
@@ -173,11 +194,11 @@ def fitnessF(playerPos, levelName):
         # }
         playerX = int(math.floor(playerPos[0] / TW))
         playerY = int(math.floor(playerPos[1] / TH))
-        if levelName == 'phil_1.tga':
+        if levelName == 'phil_1.tga' or levelName == 'test.tga':
             # specify zone
             currentZone = ''
             if playerY <= 32:
-                if playerX <= 75:
+                if playerX <= 87:
                     currentZone = 1
                 else:
                     currentZone = 3
@@ -200,4 +221,5 @@ def fitnessF(playerPos, levelName):
 
         elif levelName == 'Jungle - 2':
             pass
+
     return 0
