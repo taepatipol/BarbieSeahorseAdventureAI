@@ -101,7 +101,7 @@ class Level:
             self.title = os.path.basename(self.fname)
         self.data = load_level(fname) #load_level of level file to self.data the file is .tga
         #MYNOTE self.data is the rgb value of map
-        print "running level : "+ self.title
+        #print "running level : "+ self.title
         #agentConnect.init(self)
 
         #self.images = load_images(data.filepath('images'))
@@ -437,6 +437,8 @@ class Level:
         #handle various game status'
         if self.currentFitness <= self.bestFitness:
             self.notImproved += 1
+        else:
+            self.notImproved = 0
 
         if self.status == '_first':
             if self.player.exploded:

@@ -104,7 +104,7 @@ class AgentConnect:
                 }
                 currentGrid[gridY, gridX] = dict.get(type, 99)
 
-        #print("----------------------------------\n" + "\r" + str(self.grid))
+        #if currentGrid is not None: print("----------------------------------\n" + "\r" + str(currentGrid))
         self.gridHistory.rotate(-1)
         self.gridHistory[23] = currentGrid.flatten()
 

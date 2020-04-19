@@ -29,9 +29,9 @@ global fname
 global bestFitness
 global AGENT_ACTIVE
 AGENT_ACTIVE = 1
-USING_CHECKPOINT = 0
+USING_CHECKPOINT = 1
 FILE_PREFIX = 'checkpoint-videoIn-'
-runFile = 'checkpoint-videoIn-10'
+runFile = 'checkpoint-videoIn-49'
 
 class Input:
     def __init__(self):
@@ -297,13 +297,13 @@ class Game(engine.Game):
             while not self.quit:
                 self.loop()  # MYNOTE here is the first mainloop
                 grid = self.agentCon.getScreen()
-                if grid is not None:
-                    print("----------------------------------\n" + "\r" + str(grid))
+                #if grid is not None:
+                    #print("----------------------------------\n" + "\r" + str(grid))
                 fitness = self.agentCon.getFitness()
                 if fitness is not None:
                     print fitness
                     if fitness > bestFitness: bestFitness = fitness
-                print self.agentCon.getPlayerPos()
+                if self.agentCon.getPlayerPos() is not None: print self.agentCon.getPlayerPos()
                 if self.agentCon.isGameEnd:
                     break
         if AGENT_ACTIVE == 1:
@@ -427,6 +427,7 @@ def main():
 
 def eval_genomes(genomes, config):
     for genome_id, genome in genomes:
+        print "genome id: " + str(genome_id)
         g = Game()
         l = level.Level(g, fname, engine.Quit(g))
         net = neat.nn.recurrent.RecurrentNetwork.create(genome, config)
