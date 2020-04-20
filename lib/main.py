@@ -30,7 +30,7 @@ global bestFitness
 global AGENT_ACTIVE
 AGENT_ACTIVE = 1
 USING_CHECKPOINT = 0
-FILE_PREFIX = 'checkpoint-videoIn-'
+FILE_PREFIX = 'checkpoint-paral-'
 runFile = 'checkpoint-videoIn-45'
 
 class Input:
@@ -330,10 +330,7 @@ class Game(engine.Game):
                 if self.agentCon.isGameEnd:
                     #print "a game ended"
                     break
-
-
-
-
+        print bestFitness
         return bestFitness
 
     def loop(self):
@@ -422,19 +419,17 @@ def main():
             p.add_reporter(neat.Checkpointer(5,filename_prefix=FILE_PREFIX))
 
         pe = neat.ParallelEvaluator(10, eval_genomes)
-        winner = p.run(eval_genomes)
+        winner = p.run(pe.evaluate)
 
         with open('winner.pkl', 'wb') as output:
             pickle.dump(winner, output, 1)
 
     print("stop running")
 
-def eval_genomes(genomes, config):
-    for genome_id, genome in genomes:
-        print "genome id: " + str(genome_id)
-        g = Game()
-        l = level.Level(g, fname, engine.Quit(g))
-        net = neat.nn.recurrent.RecurrentNetwork.create(genome, config)
-        bestFitness = g.run(l,net) # run in order eval_genomes -> run -> loopStart
-        genome.fitness = bestFitness
+def eval_genomes(genome, config):
+    g = Game()
+    l = level.Level(g, 'data/levels/phil_1.tga', engine.Quit(g))
+    net = neat.nn.recurrent.RecurrentNetwork.create(genome, config)
+    bestFitness = g.run(l,net) # run in order eval_genomes -> run -> loopStart
+    genome.fitness = bestFitness
 

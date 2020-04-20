@@ -19,4 +19,5 @@ if __name__ == '__main__':
 
         profile.run('main.main()')
     else:
+        freeze_support()
         main.main()
