@@ -409,6 +409,9 @@ class Level:
         self.currentFitness = agentConnect.fitnessF(self.playerPos, self.title)
         if self.currentFitness > self.bestFitness:
             self.bestFitness = self.currentFitness
+            self.notImproved = 0
+        else:
+            self.notImproved += 1
 
 
         if self.currentFitness % 1 == 0:
@@ -435,10 +438,6 @@ class Level:
             #print 'codes:',len(self.codes)
             
         #handle various game status'
-        if self.currentFitness <= self.bestFitness:
-            self.notImproved += 1
-        else:
-            self.notImproved = 0
 
         if self.status == '_first':
             if self.player.exploded:

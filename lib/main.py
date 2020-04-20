@@ -29,9 +29,9 @@ global fname
 global bestFitness
 global AGENT_ACTIVE
 AGENT_ACTIVE = 1
-USING_CHECKPOINT = 1
+USING_CHECKPOINT = 0
 FILE_PREFIX = 'checkpoint-videoIn-'
-runFile = 'checkpoint-videoIn-49'
+runFile = 'checkpoint-videoIn-45'
 
 class Input:
     def __init__(self):
@@ -325,7 +325,7 @@ class Game(engine.Game):
                 if fitness is not None:
                     #print fitness
                     if fitness > bestFitness: bestFitness = fitness
-                if self.agentCon.getNotImprovedLoop() >= 1000:
+                if self.agentCon.getNotImprovedLoop() is not None and self.agentCon.getNotImprovedLoop() >= 1000:
                     break
                 if self.agentCon.isGameEnd:
                     #print "a game ended"
@@ -421,7 +421,11 @@ def main():
             p.add_reporter(stats)
             p.add_reporter(neat.Checkpointer(5,filename_prefix=FILE_PREFIX))
 
+        pe = neat.ParallelEvaluator(10, eval_genomes)
         winner = p.run(eval_genomes)
+
+        with open('winner.pkl', 'wb') as output:
+            pickle.dump(winner, output, 1)
 
     print("stop running")
 

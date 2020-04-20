@@ -12,7 +12,7 @@ class AgentConnect:
     def __init__(self,levelIn):
         grid = np.zeros((SH / TH, SW / TW)).flatten()
         self.gridHistory = deque()
-        for i in range(24):
+        for i in range(60):
             self.gridHistory.append(grid)
         self.currentFitness = 0
         self.level = levelIn
@@ -111,7 +111,7 @@ class AgentConnect:
         out = []
         i = 0
         for grid in self.gridHistory:
-            if i % 4 == 3: out.extend(grid)
+            if i % 10 == 9: out.extend(grid)
             i += 1
         return out
 
