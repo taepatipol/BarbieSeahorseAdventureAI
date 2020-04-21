@@ -362,6 +362,17 @@ class Game(engine.Game):
         return
 
 
+class Worker():
+    def __init__(self, genome, config):
+        self.genome = genome
+        self.config = config
+    def work(self):
+        g = Game()
+        l = level.Level(g, 'data/levels/phil_1.tga', engine.Quit(g))
+        net = neat.nn.recurrent.RecurrentNetwork.create(self.genome, self.config)
+        bestFitness = g.run(l, net)  # run in order eval_genomes -> run -> loopStart
+        return bestFitness
+
 
 def main():
     #print "Hello from your game's main()"
@@ -427,9 +438,11 @@ def main():
     print("stop running")
 
 def eval_genomes(genome, config):
-    g = Game()
-    l = level.Level(g, 'data/levels/phil_1.tga', engine.Quit(g))
-    net = neat.nn.recurrent.RecurrentNetwork.create(genome, config)
-    bestFitness = g.run(l,net) # run in order eval_genomes -> run -> loopStart
-    genome.fitness = bestFitness
+    # g = Game()
+    # l = level.Level(g, 'data/levels/phil_1.tga', engine.Quit(g))
+    # net = neat.nn.recurrent.RecurrentNetwork.create(genome, config)
+    # bestFitness = g.run(l,net) # run in order eval_genomes -> run -> loopStart
+    # genome.fitness = bestFitness
+    aWorker = Worker(genome,config)
+    return aWorker.work()
 
