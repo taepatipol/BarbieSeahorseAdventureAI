@@ -28,10 +28,15 @@ global levelName
 global fname
 global bestFitness
 global AGENT_ACTIVE
+global FNAME
+global WORKER_NUM
+
 AGENT_ACTIVE = 1
-USING_CHECKPOINT = 0
+USING_CHECKPOINT = 1
 FILE_PREFIX = 'checkpoint-paral-'
-runFile = 'checkpoint-videoIn-45'
+runFile = 'checkpoint-paral-243'
+FNAME = 'data/levels/test.tga'
+WORKER_NUM = 5
 
 class Input:
     def __init__(self):
@@ -330,7 +335,7 @@ class Game(engine.Game):
                 if self.agentCon.isGameEnd:
                     #print "a game ended"
                     break
-        print bestFitness
+        #print bestFitness
         return bestFitness
 
     def loop(self):
@@ -368,9 +373,10 @@ class Worker():
         self.config = config
     def work(self):
         g = Game()
-        l = level.Level(g, 'data/levels/phil_1.tga', engine.Quit(g))
+        l = level.Level(g, FNAME, engine.Quit(g))
         net = neat.nn.recurrent.RecurrentNetwork.create(self.genome, self.config)
         bestFitness = g.run(l, net)  # run in order eval_genomes -> run -> loopStart
+        print bestFitness
         return bestFitness
 
 
@@ -429,7 +435,7 @@ def main():
             p.add_reporter(stats)
             p.add_reporter(neat.Checkpointer(5,filename_prefix=FILE_PREFIX))
 
-        pe = neat.ParallelEvaluator(10, eval_genomes)
+        pe = neat.ParallelEvaluator(WORKER_NUM, eval_genomes)
         winner = p.run(pe.evaluate)
 
         with open('winner.pkl', 'wb') as output:

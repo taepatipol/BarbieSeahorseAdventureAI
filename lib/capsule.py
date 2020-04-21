@@ -6,7 +6,7 @@ from pygame.locals import *
 import sprite
 
 def init(g,r):
-    print 'new capsule bubble'
+    #print 'new capsule bubble'
 
     s = sprite.Sprite3(g,r,'captured-generic', (0,0,16,16))
 
