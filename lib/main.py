@@ -34,7 +34,7 @@ global WORKER_NUM
 AGENT_ACTIVE = 1
 USING_CHECKPOINT = 1
 FILE_PREFIX = 'checkpoint-paral-'
-runFile = 'checkpoint-paral-243'
+runFile = 'checkpoint-paral-759'
 FNAME = 'data/levels/test.tga'
 WORKER_NUM = 5
 
