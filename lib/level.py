@@ -201,6 +201,7 @@ class Level:
         return r
         
     def paint(self,screen):
+        #return
         self.view.clamp_ip(self.bounds)
         
         #TODO: optimize sometime, maybe ...

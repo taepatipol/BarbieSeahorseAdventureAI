@@ -34,9 +34,13 @@ global WORKER_NUM
 AGENT_ACTIVE = 1
 USING_CHECKPOINT = 1
 FILE_PREFIX = 'checkpoint-paral-'
-runFile = 'checkpoint-paral-759'
+runFile = 'checkpoint-paral-1029'
 FNAME = 'data/levels/test.tga'
-WORKER_NUM = 5
+WORKER_NUM = 20
+
+#GPU running
+#from numba import jit, cuda
+
 
 class Input:
     def __init__(self):
@@ -371,6 +375,7 @@ class Worker():
     def __init__(self, genome, config):
         self.genome = genome
         self.config = config
+
     def work(self):
         g = Game()
         l = level.Level(g, FNAME, engine.Quit(g))
