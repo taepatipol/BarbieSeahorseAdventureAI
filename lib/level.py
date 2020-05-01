@@ -15,7 +15,7 @@ import menu
 import levels
 import agentConnect
 
-DISABLE_GRAPHIC = True
+DISABLE_GRAPHIC = 0
 
 def load_level(fname):
     img = pygame.image.load(fname)

@@ -32,9 +32,9 @@ global FNAME
 global WORKER_NUM
 
 AGENT_ACTIVE = 1
-USING_CHECKPOINT = 1
+USING_CHECKPOINT = 0
 FILE_PREFIX = 'checkpoint-paral-'
-runFile = 'checkpoint-paral-1687'
+runFile = 'checkpoint-paral-1882'
 FNAME = 'data/levels/test.tga'
 WORKER_NUM = 20
 DUMMY_SCREEN = True
