@@ -34,9 +34,10 @@ global WORKER_NUM
 AGENT_ACTIVE = 1
 USING_CHECKPOINT = 1
 FILE_PREFIX = 'checkpoint-paral-'
-runFile = 'checkpoint-paral-1479'
+runFile = 'checkpoint-paral-1647'
 FNAME = 'data/levels/test.tga'
 WORKER_NUM = 20
+DUMMY_SCREEN = True
 
 #GPU running
 #from numba import jit, cuda
@@ -387,7 +388,7 @@ class Worker():
 def main():
     #print "Hello from your game's main()"
     #print data.load('sample.txt').read()
-    os.environ["SDL_VIDEODRIVER"] = "dummy"
+    if DUMMY_SCREEN: os.environ["SDL_VIDEODRIVER"] = "dummy"
     
     #fname = None #data.filepath(os.path.join('levels','test.tga'))
     global levelName
