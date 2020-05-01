@@ -34,7 +34,7 @@ global WORKER_NUM
 AGENT_ACTIVE = 1
 USING_CHECKPOINT = 1
 FILE_PREFIX = 'checkpoint-paral-'
-runFile = 'checkpoint-paral-1029'
+runFile = 'checkpoint-paral-1479'
 FNAME = 'data/levels/test.tga'
 WORKER_NUM = 20
 
@@ -383,7 +383,6 @@ class Worker():
         bestFitness = g.run(l, net)  # run in order eval_genomes -> run -> loopStart
         print bestFitness
         return bestFitness
-
 
 def main():
     #print "Hello from your game's main()"

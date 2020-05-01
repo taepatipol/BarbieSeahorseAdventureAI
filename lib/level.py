@@ -15,6 +15,8 @@ import menu
 import levels
 import agentConnect
 
+DISABLE_GRAPHIC = True
+
 def load_level(fname):
     img = pygame.image.load(fname)
     #return [[[img.get_at((x,y))[n] for x in xrange(0,img.get_width())] for y in xrange(0,img.get_height())] for n in xrange(0,4)]
@@ -201,6 +203,8 @@ class Level:
         return r
         
     def paint(self,screen):
+        if DISABLE_GRAPHIC:
+            return
         #return
         self.view.clamp_ip(self.bounds)
         
