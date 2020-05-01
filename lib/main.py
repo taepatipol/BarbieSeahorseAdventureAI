@@ -40,7 +40,7 @@ WORKER_NUM = 20
 
 #GPU running
 #from numba import jit, cuda
-
+import os
 
 class Input:
     def __init__(self):
@@ -387,6 +387,7 @@ class Worker():
 def main():
     #print "Hello from your game's main()"
     #print data.load('sample.txt').read()
+    os.environ["SDL_VIDEODRIVER"] = "dummy"
     
     #fname = None #data.filepath(os.path.join('levels','test.tga'))
     global levelName
