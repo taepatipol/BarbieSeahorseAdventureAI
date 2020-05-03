@@ -22,6 +22,7 @@ import level
 import neat
 import pickle
 import numpy as np
+from use_genome import loadWinner
 
 from agentConnect import AgentConnect
 global levelName
@@ -31,10 +32,10 @@ global AGENT_ACTIVE
 global FNAME
 global WORKER_NUM
 
-AGENT_ACTIVE = 1
-USING_CHECKPOINT = 0
+AGENT_ACTIVE = 1 # 2 is using winner
+USING_CHECKPOINT = 1
 FILE_PREFIX = 'checkpoint-paral-'
-runFile = 'checkpoint-paral-1882'
+runFile = 'checkpoint-paral-69'
 FNAME = 'data/levels/test.tga'
 WORKER_NUM = 20
 DUMMY_SCREEN = True
@@ -78,7 +79,7 @@ class Game(engine.Game):
         self.init_play()
         self.lcur = 0
 
-        if AGENT_ACTIVE == 1:
+        if AGENT_ACTIVE == 1 or AGENT_ACTIVE == 2:
             self.agentCon = AgentConnect(self.state)
 
         self.scale2x = SCALE2X
@@ -316,7 +317,7 @@ class Game(engine.Game):
                 if self.agentCon.getPlayerPos() is not None: print self.agentCon.getPlayerPos()
                 if self.agentCon.isGameEnd:
                     break
-        if AGENT_ACTIVE == 1:
+        if AGENT_ACTIVE == 1 or AGENT_ACTIVE == 2:
             nn = net
             while not self.quit:
                 grid = self.agentCon.getScreen()
@@ -340,6 +341,7 @@ class Game(engine.Game):
                 if self.agentCon.isGameEnd:
                     #print "a game ended"
                     break
+
         #print bestFitness
         return bestFitness
 
@@ -446,6 +448,11 @@ def main():
 
         with open('winner.pkl', 'wb') as output:
             pickle.dump(winner, output, 1)
+    if AGENT_ACTIVE == 2:
+        net = loadWinner()
+        g = Game()
+        l = level.Level(g, FNAME, engine.Quit(g))
+        bestFitness = g.run(l, net)
 
     print("stop running")
 
