@@ -432,14 +432,14 @@ def main():
             p.add_reporter(neat.StdOutReporter(True))
             stats = neat.StatisticsReporter()
             p.add_reporter(stats)
-            p.add_reporter(neat.Checkpointer(5,filename_prefix=FILE_PREFIX))
+            p.add_reporter(neat.Checkpointer(20,filename_prefix=FILE_PREFIX))
 
         if USING_CHECKPOINT == 1:
             p = neat.Checkpointer.restore_checkpoint(runFile)
             p.add_reporter(neat.StdOutReporter(True))
             stats = neat.StatisticsReporter()
             p.add_reporter(stats)
-            p.add_reporter(neat.Checkpointer(5,filename_prefix=FILE_PREFIX))
+            p.add_reporter(neat.Checkpointer(20,filename_prefix=FILE_PREFIX))
 
         pe = neat.ParallelEvaluator(WORKER_NUM, eval_genomes)
         winner = p.run(pe.evaluate)
