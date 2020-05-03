@@ -32,13 +32,13 @@ global AGENT_ACTIVE
 global FNAME
 global WORKER_NUM
 
-AGENT_ACTIVE = 1 # 2 is using winner
+AGENT_ACTIVE = 2 # 2 is using winner
 USING_CHECKPOINT = 1
 FILE_PREFIX = 'checkpoint-paral-'
 runFile = 'checkpoint-paral-69'
 FNAME = 'data/levels/test.tga'
 WORKER_NUM = 20
-DUMMY_SCREEN = True
+DUMMY_SCREEN = False
 
 #GPU running
 #from numba import jit, cuda

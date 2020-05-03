@@ -11,7 +11,7 @@ def loadWinner():
     config = neat.Config(neat.DefaultGenome, neat.DefaultReproduction,
                          neat.DefaultSpeciesSet, neat.DefaultStagnation,
                          'config-feedforward')
-    net = neat.nn.FeedForwardNetwork.create(genome, config)
+    net = neat.nn.recurrent.RecurrentNetwork.create(genome, config)
 
     #print('\nBest nn:\n{!s}'.format(net))
     return net
