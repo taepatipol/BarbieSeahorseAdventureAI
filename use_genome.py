@@ -1,8 +1,8 @@
 import pickle
 import neat
 
-def loadWinner():
-    file = open('winner.pkl','rb')
+def loadWinner(genomeName):
+    file = open(genomeName,'rb')
     genome = pickle.load(file)
     file.close()
 
@@ -15,8 +15,3 @@ def loadWinner():
 
     #print('\nBest nn:\n{!s}'.format(net))
     return net
-
-
-
-if __name__ == '__main__':
-    loadWinner()

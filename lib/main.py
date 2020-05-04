@@ -32,13 +32,20 @@ global AGENT_ACTIVE
 global FNAME
 global WORKER_NUM
 
-AGENT_ACTIVE = 1 # 2 is using winner
+AGENT_ACTIVE = 0 # 2 is using trained genome
+GENOME_SAVE_NAME = 'winner.pkl'
+GENOME_LOAD_NAME = 'winner.pkl'
+
 USING_CHECKPOINT = 1
 FILE_PREFIX = 'checkpoint-level1-'
-runFile = 'resume'
-FNAME = 'data/levels/phil_1.tga'
+runFile = 'resume-1843'
 WORKER_NUM = 20
-DUMMY_SCREEN = True
+DUMMY_SCREEN = 0
+
+MENU_ACTIVE = 0
+FNAME = 'data/levels/phil_1edited.tga'
+
+
 
 #GPU running
 #from numba import jit, cuda
@@ -404,7 +411,9 @@ def main():
     if AGENT_ACTIVE == 0:
         g = Game()
         g.init()
-        l = l2 = menu.Menu(g)
+        l = None
+        if MENU_ACTIVE:
+            l = l2 = menu.Menu(g)
 
     #l = menu.Intro(g,l2)
 
@@ -424,6 +433,8 @@ def main():
         if levelName == 'lv-test': fname = 'data/levels/test.tga'
         if AGENT_ACTIVE == 0: l = level.Level(g,fname,engine.Quit(g)) #MYCOMMENT CAN COMMENT THIS AND PLAY GAME LIKE NORMAL
     if AGENT_ACTIVE == 0:
+        if l is None:
+            l = level.Level(g, FNAME, engine.Quit(g))
         g.run(l)#MYCOMMENT game run menu  !! l is the g.state
     if AGENT_ACTIVE == 1:
         if USING_CHECKPOINT == 0:
@@ -446,10 +457,10 @@ def main():
         pe = neat.ParallelEvaluator(WORKER_NUM, eval_genomes)
         winner = p.run(pe.evaluate)
 
-        with open('winner.pkl', 'wb') as output:
+        with open(GENOME_SAVE_NAME, 'wb') as output:
             pickle.dump(winner, output, 1)
     if AGENT_ACTIVE == 2:
-        net = loadWinner()
+        net = loadWinner(GENOME_LOAD_NAME)
         g = Game()
         l = level.Level(g, FNAME, engine.Quit(g))
         bestFitness = g.run(l, net)
