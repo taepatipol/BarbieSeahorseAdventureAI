@@ -455,7 +455,7 @@ def main():
             p.add_reporter(neat.Checkpointer(20,filename_prefix=FILE_PREFIX))
 
         pe = neat.ParallelEvaluator(WORKER_NUM, eval_genomes)
-        winner = p.run(pe.evaluate)
+        winner = p.run(pe.evaluate,2000)
 
         with open(GENOME_SAVE_NAME, 'wb') as output:
             pickle.dump(winner, output, 1)
