@@ -38,7 +38,7 @@ GENOME_LOAD_NAME = 'winner.pkl'
 
 USING_CHECKPOINT = 1
 FILE_PREFIX = 'checkpoint-level2-'
-runFile = 'checkpoint-level2-84'
+runFile = 'resume-level2-371'
 WORKER_NUM = 20
 DUMMY_SCREEN = 1
 
