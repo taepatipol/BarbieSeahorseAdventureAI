@@ -33,17 +33,17 @@ global FNAME
 global WORKER_NUM
 
 AGENT_ACTIVE = 1 # 2 is using trained genome
-GENOME_SAVE_NAME = 'winnerLevel1.pkl'
+GENOME_SAVE_NAME = 'winnerLevel2.pkl'
 GENOME_LOAD_NAME = 'winner.pkl'
 
 USING_CHECKPOINT = 1
-FILE_PREFIX = 'checkpoint-level1-'
-runFile = 'resume-1843'
+FILE_PREFIX = 'checkpoint-level2-'
+runFile = 'checkpoint-level2-84'
 WORKER_NUM = 20
 DUMMY_SCREEN = 1
 
 MENU_ACTIVE = 0 # for no agent
-FNAME = 'data/levels/phil_1edited.tga'
+FNAME = 'data/levels/phil_7.tga'
 
 
 
