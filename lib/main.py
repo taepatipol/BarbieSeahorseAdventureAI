@@ -33,7 +33,7 @@ global FNAME
 global WORKER_NUM
 
 AGENT_ACTIVE = 1 # 2 is using trained genome
-GENOME_SAVE_NAME = 'winnerLevel1.pkl'
+GENOME_SAVE_NAME = 'winnerLevel0.pkl'
 GENOME_LOAD_NAME = 'winner.pkl'
 
 USING_CHECKPOINT = 0
@@ -43,7 +43,7 @@ WORKER_NUM = 20
 DUMMY_SCREEN = 1
 
 MENU_ACTIVE = 0 # for no agent
-FNAME = 'data/levels/phil_1edited.tga'
+FNAME = 'data/levels/test.tga'
 
 
 
