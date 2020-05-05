@@ -108,12 +108,14 @@ class AgentConnect:
         self.gridHistory.rotate(-1)
         self.gridHistory[23] = currentGrid.flatten()
 
-        out = []
-        i = 0
-        for grid in self.gridHistory:
-            if i % 10 == 9: out.extend(grid)
-            i += 1
-        return out
+        # below will be used if using feedforward nn instead of recurrent
+        # out = []
+        # i = 0
+        # for grid in self.gridHistory:
+        #     if i % 10 == 9: out.extend(grid)
+        #     i += 1
+        
+        return currentGrid.flatten()
 
 
     def outputToControl(self, al):

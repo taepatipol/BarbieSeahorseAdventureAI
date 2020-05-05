@@ -389,7 +389,7 @@ class Worker():
     def work(self):
         g = Game()
         l = level.Level(g, FNAME, engine.Quit(g))
-        net = neat.nn.FeedForwardNetwork.create(self.genome, self.config)
+        net = neat.nn.recurrent.RecurrentNetwork.create(self.genome, self.config)
         bestFitness = g.run(l, net)  # run in order eval_genomes -> run -> loopStart
         print bestFitness
         return bestFitness
