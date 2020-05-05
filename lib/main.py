@@ -327,7 +327,7 @@ class Game(engine.Game):
         if AGENT_ACTIVE == 1 or AGENT_ACTIVE == 2:
             nn = net
             while not self.quit:
-                grid = self.agentCon.getScreen()
+                grid = self.agentCon.getScreen().tolist()
                 # if grid is not None:
                 #     print("----------------------------------\n" + "\r" + str(grid))
                 if grid is not None:
