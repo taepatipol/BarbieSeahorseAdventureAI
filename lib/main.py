@@ -37,13 +37,13 @@ GENOME_SAVE_NAME = 'winnerLevel0.pkl'
 GENOME_LOAD_NAME = 'winner.pkl'
 
 USING_CHECKPOINT = 1
-FILE_PREFIX = 'checkpoint-level0-'
+FILE_PREFIX = 'checkpoint-level2-'
 runFile = 'resume-level0-178'
 WORKER_NUM = 20
 DUMMY_SCREEN = 1
 
 MENU_ACTIVE = 0 # for no agent
-FNAME = 'data/levels/test.tga'
+FNAME = 'data/levels/phil_7.tga'
 
 
 
