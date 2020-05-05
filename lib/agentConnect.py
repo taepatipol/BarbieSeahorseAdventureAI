@@ -242,4 +242,26 @@ def fitnessF(playerPos, levelName):
                 fit = calculateFitness(calculateDistance(playerX, playerY, finish[0], finish[1]))
                 return fit+2
 
-    return 0
+        elif levelName == 'Jungle - 4' or levelName == 'phil_2.tga':
+            door1 = (41,6)
+            door2 = (54,26)
+            finish = (65,5)
+            if playerY <= 21:
+                if playerX >= 46:
+                    currentZone = 3
+                else:
+                    currentZone = 1
+            else:
+                currentZone = 2
+
+            if currentZone == 1:
+                fit = calculateFitness(calculateDistance(playerX, playerY, door1[0], door1[1]))
+                return fit
+            elif currentZone == 2:
+                fit = calculateFitness(calculateDistance(playerX, playerY, door2[0], door2[1]))
+                return fit+1
+            elif currentZone == 3:
+                fit = calculateFitness(calculateDistance(playerX, playerY, finish[0], finish[1]))
+                return fit+2
+
+    return 0.1
