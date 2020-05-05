@@ -38,8 +38,9 @@ GENOME_LOAD_NAME = 'winner.pkl'
 
 USING_CHECKPOINT = 1
 FILE_PREFIX = 'checkpoint-level1-'
-runFile = 'checkpoint-level0-194'
+runFile = 'best-level1-487'
 WORKER_NUM = 20
+GEN_RUN = 10
 DUMMY_SCREEN = 1
 
 MENU_ACTIVE = 0 # for no agent
@@ -456,7 +457,7 @@ def main():
             p.add_reporter(neat.Checkpointer(20,filename_prefix=FILE_PREFIX))
 
         pe = neat.ParallelEvaluator(WORKER_NUM, eval_genomes)
-        winner = p.run(pe.evaluate, 1000)
+        winner = p.run(pe.evaluate, GEN_RUN)
 
         with open(GENOME_SAVE_NAME, 'wb') as output:
             pickle.dump(winner, output, 1)
