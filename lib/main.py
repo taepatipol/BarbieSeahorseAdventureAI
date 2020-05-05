@@ -36,9 +36,9 @@ AGENT_ACTIVE = 1 # 2 is using trained genome
 GENOME_SAVE_NAME = 'winnerLevel0.pkl'
 GENOME_LOAD_NAME = 'winner.pkl'
 
-USING_CHECKPOINT = 0
-FILE_PREFIX = 'checkpoint-level1-'
-runFile = 'resume-1843'
+USING_CHECKPOINT = 1
+FILE_PREFIX = 'checkpoint-level0-'
+runFile = 'resume-level0-178'
 WORKER_NUM = 20
 DUMMY_SCREEN = 1
 
