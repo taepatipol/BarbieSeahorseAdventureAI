@@ -327,10 +327,11 @@ class Game(engine.Game):
         if AGENT_ACTIVE == 1 or AGENT_ACTIVE == 2:
             nn = net
             while not self.quit:
-                grid = self.agentCon.getScreen().tolist()
+                grid = self.agentCon.getScreen()
                 # if grid is not None:
                 #     print("----------------------------------\n" + "\r" + str(grid))
                 if grid is not None:
+                    grid = grid.tolist()
                     #input power up status
                     poweredUp = self.agentCon.getPlayerPowerUp()
                     if poweredUp is None or not poweredUp: grid.append(0)
