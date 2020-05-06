@@ -39,9 +39,9 @@ GENOME_LOAD_NAME = 'winnerVol1.pkl'
 USING_CHECKPOINT = 0
 FILE_PREFIX = 'checkpoint-vol1-'
 runFile = 'starterPop'
-WORKER_NUM = 19
+WORKER_NUM = 20
 DUMMY_SCREEN = 1
-GEN_RUN = 1000
+GEN_RUN = 500
 
 MENU_ACTIVE = 0 # for no agent
 FNAME = 'data/levels/fydo_1.tga'
@@ -389,12 +389,15 @@ class Worker():
         self.config = config
 
     def work(self):
-        g = Game()
-        l = level.Level(g, FNAME, engine.Quit(g))
-        net = neat.nn.recurrent.RecurrentNetwork.create(self.genome, self.config)
-        bestFitness = g.run(l, net)  # run in order eval_genomes -> run -> loopStart
-        print bestFitness
-        return bestFitness
+        try:
+            g = Game()
+            l = level.Level(g, FNAME, engine.Quit(g))
+            net = neat.nn.recurrent.RecurrentNetwork.create(self.genome, self.config)
+            bestFitness = g.run(l, net)  # run in order eval_genomes -> run -> loopStart
+            print bestFitness
+            return bestFitness
+        except IndexError:
+            return 0
 
 def main():
     #print "Hello from your game's main()"
