@@ -277,6 +277,6 @@ def fitnessF(playerPos, levelName):
                 return fit
             elif currentZone == 2:
                 fit = calculateFitness(calculateDistance(playerX, playerY, finish[0], finish[1]))
-                return fit+1
+                return fit+2
 
     return 0.1
