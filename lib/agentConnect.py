@@ -274,11 +274,24 @@ def fitnessF(playerPos, levelName):
 
             if currentZone == 1:
                 fit = calculateFitness(calculateDistance(playerX, playerY, door1[0], door1[1]))
-                if fit < 0.01: fit = 0.01
                 return fit
             elif currentZone == 2:
                 fit = calculateFitness(calculateDistance(playerX, playerY, finish[0], finish[1]))
-                if fit < 0.01: fit = 0.01
+                return fit+2
+
+        elif levelName == 'Volcano - 2' or levelName == 'tim_1.tga':
+            door1 = (19,6)
+            finish = (26,8)
+            if playerX <= 24:
+                currentZone = 1
+            else:
+                currentZone = 2
+
+            if currentZone == 1:
+                fit = calculateFitness(calculateDistance(playerX, playerY, door1[0], door1[1]))
+                return fit
+            elif currentZone == 2:
+                fit = calculateFitness(calculateDistance(playerX, playerY, finish[0], finish[1]))
                 return fit+2
 
     return 0.1
