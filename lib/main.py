@@ -39,7 +39,7 @@ GENOME_LOAD_NAME = 'winnerVol1.pkl'
 USING_CHECKPOINT = 0
 FILE_PREFIX = 'checkpoint-vol1-'
 runFile = 'starterPop'
-WORKER_NUM = 20
+WORKER_NUM = 19
 DUMMY_SCREEN = 1
 GEN_RUN = 1000
 
