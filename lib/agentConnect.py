@@ -294,4 +294,27 @@ def fitnessF(playerPos, levelName):
                 fit = calculateFitness(calculateDistance(playerX, playerY, finish[0], finish[1]))
                 return fit+2
 
+        elif levelName == 'Volcano - 3' or levelName == 'pekuja_2.tga':
+            finish = (70,14)
+            if playerX > 42: zone = 4
+            elif playerX > 21:
+                if playerY >= 16:
+                    zone = 2
+                else: zone = 3
+            else:
+                if playerY >= 16:
+                    zone = 1
+                else: zone = 0
+            if zone == 4:
+                fit = calculateFitness(calculateDistance(playerX, playerY, finish[0], finish[1]))
+                return fit+2
+            elif zone == 0:
+                return 0
+            elif zone == 1:
+                return 0.5
+            elif zone == 2:
+                return 1
+            elif zone == 3:
+                return 1.5
+
     return 0.1
