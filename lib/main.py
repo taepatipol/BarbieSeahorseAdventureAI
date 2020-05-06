@@ -32,7 +32,7 @@ global AGENT_ACTIVE
 global FNAME
 global WORKER_NUM
 
-AGENT_ACTIVE = 1 # 2 is using trained genome
+AGENT_ACTIVE = 2 # 2 is using trained genome
 GENOME_SAVE_NAME = 'winnerVol3.pkl'
 GENOME_LOAD_NAME = 'winnerVol3.pkl'
 
@@ -40,7 +40,7 @@ USING_CHECKPOINT = 1
 FILE_PREFIX = 'checkpoint-vol3-'
 runFile = 'starterPop'
 WORKER_NUM = 20
-DUMMY_SCREEN = 1
+DUMMY_SCREEN = 0
 GEN_RUN = 1000
 
 MENU_ACTIVE = 0 # for no agent
