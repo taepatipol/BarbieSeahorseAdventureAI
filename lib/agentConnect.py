@@ -353,5 +353,10 @@ def fitnessF(playerPos, levelName):
                 fit = calculateFitness(calculateDistance(playerX, playerY, finish[0], finish[1]))
                 return fit + 2
 
+        elif levelName == "Moon - 3" or levelName == "phil_9.tga":
+            finish = (70,66)
+            fit = calculateFitness(calculateDistance(playerX, playerY, finish[0], finish[1]))
+            return fit
+
 
     return fit
