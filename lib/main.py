@@ -38,7 +38,7 @@ GENOME_LOAD_NAME = 'winnerLevel4.pkl'
 
 USING_CHECKPOINT = 1
 FILE_PREFIX = 'checkpoint-level4-'
-runFile = 'starterPop'
+runFile = 'resume-level4'
 WORKER_NUM = 20
 DUMMY_SCREEN = 1
 GEN_RUN = 500
