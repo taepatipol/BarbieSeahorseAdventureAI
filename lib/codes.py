@@ -106,7 +106,7 @@ CODES = {
 def c_init(g, pos, n):
     x, y = pos
     if n not in INIT_CODES and n not in CODES:
-        print 'undefined code:', x, y, '0x%2x' % n
+        #print 'undefined code:', x, y, '0x%2x' % n
         return
     if n not in INIT_CODES: return
     v = INIT_CODES[n]
@@ -116,7 +116,7 @@ def c_init(g, pos, n):
 def c_run(g, pos, n):
     x, y = pos
     if n not in INIT_CODES and n not in CODES:
-        print 'undefined code:', x, y, '0x%2x' % n
+        #print 'undefined code:', x, y, '0x%2x' % n
         return
     if n not in CODES: return
     v = CODES[n]

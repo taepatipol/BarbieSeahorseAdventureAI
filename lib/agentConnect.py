@@ -323,4 +323,35 @@ def fitnessF(playerPos, levelName):
                 fit = calculateFitness(calculateDistance(playerX, playerY, finish[0], finish[1]))
                 return fit+2
 
+        elif levelName == "Moon - 2" or levelName == "phil_5.tga":
+            doorHiddenIn = (35,68)
+            doorHiddenOut = (29,56)
+            door2 = (60,44)
+            finish = (14,38)
+
+            if playerX > 33:
+                if playerY <= 54:
+                    currentZone = 3
+                else:
+                    currentZone = 1
+            else:
+                if playerY >= 50:
+                    currentZone = 2
+                else:
+                    currentZone = 4
+
+            if currentZone == 1:
+                fit = calculateFitness(calculateDistance(playerX, playerY, doorHiddenIn[0], doorHiddenIn[1]))
+                return fit / 2
+            elif currentZone == 2:
+                fit = calculateFitness(calculateDistance(playerX, playerY, doorHiddenOut[0], doorHiddenOut[1]))
+                return fit / 2 + 0.5
+            elif currentZone == 3:
+                fit = calculateFitness(calculateDistance(playerX, playerY, door2[0], door2[1]))
+                return fit + 1
+            elif currentZone == 4:
+                fit = calculateFitness(calculateDistance(playerX, playerY, finish[0], finish[1]))
+                return fit + 2
+
+
     return fit
