@@ -33,18 +33,18 @@ global FNAME
 global WORKER_NUM
 
 AGENT_ACTIVE = 1 # 2 is using trained genome
-GENOME_SAVE_NAME = 'winnerMoon3.pkl'
-GENOME_LOAD_NAME = 'winnerMoon3.pkl'
+GENOME_SAVE_NAME = 'winnerBoss.pkl'
+GENOME_LOAD_NAME = 'winnerBoss.pkl'
 
-USING_CHECKPOINT = 1
-FILE_PREFIX = 'checkpoint-Moon3-'
+USING_CHECKPOINT = 0
+FILE_PREFIX = 'checkpoint-Boss-'
 runFile = 'starterPop'
 WORKER_NUM = 20
 DUMMY_SCREEN = 1
 GEN_RUN = 500
 
 MENU_ACTIVE = 0 # for no agent
-FNAME = 'data/levels/phil_9.tga'
+FNAME = 'data/levels/boss_1.tga'
 
 
 

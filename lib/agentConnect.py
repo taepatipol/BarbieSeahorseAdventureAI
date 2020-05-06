@@ -177,7 +177,7 @@ def calculateFitness(dist):
         fit = 1
     return fit
 
-def fitnessF(playerPos, levelName):
+def fitnessF(playerPos, levelName, bossHP=6):
     if playerPos is None or not isinstance(playerPos, list) or len(playerPos) != 2:
         print "fitness function error: can not get player position"
         return 0
@@ -356,6 +356,17 @@ def fitnessF(playerPos, levelName):
         elif levelName == "Moon - 3" or levelName == "phil_9.tga":
             finish = (70,66)
             fit = calculateFitness(calculateDistance(playerX, playerY, finish[0], finish[1]))
+            return fit
+
+        elif levelName == "Boss" or levelName == "boss_1.tga":
+            fit = 6 - bossHP
+            door = (2,18)
+            if bossHP == 3:
+                if playerY >= 17:
+                    fit = calculateFitness(calculateDistance(playerX, playerY, door[0], door[1]))
+                    fit += 3 + fit/2
+                else:
+                    fit = 3.99
             return fit
 
 

@@ -91,6 +91,7 @@ class Level:
         self.playerPos = None
         self.agentCon = None
         self.notImproved = 0
+        self.bossStrength = 0
 
     def init(self):
         #self._tiles = load_tiles(data.filepath('tiles.tga'))
@@ -397,6 +398,7 @@ class Level:
         # screenView = self.view
 
         # printing sprites rect position MYCODE
+        self.bossSprite = None
         self.playerSprite = None
         self.playerPos = [0,0]
         self.spritesData = []
@@ -405,18 +407,21 @@ class Level:
             if hasattr(s, 'type'):
                 spriteData.append(s.type)
                 if s.type == 'player': self.playerSprite = s
+                if s.type == 'boss': self.bossSprite = s
             self.spritesData.append(spriteData)
 
         # agentConnect.getScreen(tilesData, spritesData,screenView.left,screenView.top)
 
         if self.playerSprite != None:
             self.playerPos = [self.playerSprite.rect.centerx, self.playerSprite.rect.centery]
-        self.currentFitness = agentConnect.fitnessF(self.playerPos, self.title)
+        self.currentFitness = agentConnect.fitnessF(self.playerPos, self.title, self.bossStrength)
         if self.currentFitness > self.bestFitness:
             self.bestFitness = self.currentFitness
             self.notImproved = 0
         else:
             self.notImproved += 1
+        if self.bossSprite != None:
+            self.bossStrength = self.bossSprite.strength
 
 
         if self.currentFitness % 1 == 0:
