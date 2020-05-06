@@ -105,8 +105,8 @@ class AgentConnect:
                 currentGrid[gridY, gridX] = dict.get(type, 99)
 
         #if currentGrid is not None: print("----------------------------------\n" + "\r" + str(currentGrid))
-        self.gridHistory.rotate(-1)
-        self.gridHistory[23] = currentGrid.flatten()
+        #self.gridHistory.rotate(-1)
+        #self.gridHistory[23] = currentGrid.flatten()
 
         # below will be used if using feedforward nn instead of recurrent
         # out = []
@@ -143,6 +143,7 @@ class AgentConnect:
                 shootEvent = pygame.event.Event(USEREVENT, {'action': 'bubble'})
                 pygame.event.post(shootEvent)
         if OPTION == 2:
+            if len(actionsList) < 3: return
             if actionsList[0] <= 0.33:
                 leftEvent = pygame.event.Event(USEREVENT, {'action': 'left'})
                 pygame.event.post(leftEvent)
@@ -177,9 +178,11 @@ def calculateFitness(dist):
     return fit
 
 def fitnessF(playerPos, levelName):
-    if playerPos == None:
+    if playerPos is None or not isinstance(playerPos, list) or len(playerPos) != 2:
         print "fitness function error: can not get player position"
+        return 0
     else:
+        fit = 0.1
         # levelSwitcher = {
         #     'Jungle - 1':'jungle1',
         #     'Jungle - 2':'jungle2',
@@ -303,21 +306,21 @@ def fitnessF(playerPos, levelName):
 
             if currentZone == 1:
                 fit = calculateFitness(calculateDistance(playerX, playerY, door1[0], door1[1]))
-                return fit
+                return fit/2
             elif currentZone == 2:
                 fit1 = calculateFitness(calculateDistance(playerX, playerY, door2[0], door2[1]))
                 fit2 = calculateFitness(calculateDistance(playerX, playerY, door2alt[0], door2alt[1]))
                 if fit1 > fit2:
-                    return fit1 + 1
-                else: return fit2 + 1
+                    return fit1/2 + 0.5
+                else: return fit2/2 + 0.5
             elif currentZone == 3:
                 fit = calculateFitness(calculateDistance(playerX, playerY, door3[0], door3[1]))
-                return fit+2
+                return fit+1
             elif currentZone == 3.5:
                 fit = calculateFitness(calculateDistance(playerX, playerY, door3bonus[0], door3bonus[1]))
-                return fit+2
+                return fit+1
             elif currentZone == 4:
                 fit = calculateFitness(calculateDistance(playerX, playerY, finish[0], finish[1]))
-                return fit+3
+                return fit+2
 
-    return 0.1
+    return fit

@@ -398,7 +398,7 @@ class Level:
 
         # printing sprites rect position MYCODE
         self.playerSprite = None
-        self.playerPos = None
+        self.playerPos = [0,0]
         self.spritesData = []
         for s in self.sprites:
             spriteData = [s.rect.centerx, s.rect.centery]

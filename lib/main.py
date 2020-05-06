@@ -32,16 +32,16 @@ global AGENT_ACTIVE
 global FNAME
 global WORKER_NUM
 
-AGENT_ACTIVE = 1 # 2 is using trained genome
+AGENT_ACTIVE = 2 # 2 is using trained genome
 GENOME_SAVE_NAME = 'winnerMoon1.pkl'
 GENOME_LOAD_NAME = 'winnerMoon1.pkl'
 
 USING_CHECKPOINT = 1
 FILE_PREFIX = 'checkpoint-Moon1-'
-runFile = 'starterPop'
-WORKER_NUM = 5
-DUMMY_SCREEN = 1
-GEN_RUN = 1000
+runFile = 'best-Moon1-362'
+WORKER_NUM = 20
+DUMMY_SCREEN = 0
+GEN_RUN = 1
 
 MENU_ACTIVE = 0 # for no agent
 FNAME = 'data/levels/pekuja_1.tga'
@@ -331,7 +331,7 @@ class Game(engine.Game):
                 grid = self.agentCon.getScreen()
                 # if grid is not None:
                 #     print("----------------------------------\n" + "\r" + str(grid))
-                if grid is not None:
+                if grid is not None and len(grid)==300:
                     grid = grid.tolist()
                     #input power up status
                     poweredUp = self.agentCon.getPlayerPowerUp()
@@ -389,12 +389,16 @@ class Worker():
         self.config = config
 
     def work(self):
-        g = Game()
-        l = level.Level(g, FNAME, engine.Quit(g))
-        net = neat.nn.recurrent.RecurrentNetwork.create(self.genome, self.config)
-        bestFitness = g.run(l, net)  # run in order eval_genomes -> run -> loopStart
-        print bestFitness
-        return bestFitness
+        try:
+            g = Game()
+            l = level.Level(g, FNAME, engine.Quit(g))
+            net = neat.nn.recurrent.RecurrentNetwork.create(self.genome, self.config)
+            bestFitness = g.run(l, net)  # run in order eval_genomes -> run -> loopStart
+            print bestFitness
+            return bestFitness
+        except IndexError:
+            return 0
+
 
 def main():
     #print "Hello from your game's main()"
