@@ -44,7 +44,7 @@ DUMMY_SCREEN = 1
 GEN_RUN = 500
 
 MENU_ACTIVE = 0 # for no agent
-FNAME = 'data/levels/phil_2.tga'
+FNAME = 'data/levels/fydo_1.tga'
 
 
 
