@@ -264,4 +264,19 @@ def fitnessF(playerPos, levelName):
                 fit = calculateFitness(calculateDistance(playerX, playerY, finish[0], finish[1]))
                 return fit+2
 
+        elif levelName == 'Volcano - 1' or levelName == 'fydo_1.tga':
+            door1 = (18,19)
+            finish = (27,8)
+            if playerY <= 17:
+                currentZone = 2
+            else:
+                currentZone = 1
+
+            if currentZone == 1:
+                fit = calculateFitness(calculateDistance(playerX, playerY, door1[0], door1[1]))
+                return fit
+            elif currentZone == 2:
+                fit = calculateFitness(calculateDistance(playerX, playerY, finish[0], finish[1]))
+                return fit+1
+
     return 0.1

@@ -33,15 +33,15 @@ global FNAME
 global WORKER_NUM
 
 AGENT_ACTIVE = 1 # 2 is using trained genome
-GENOME_SAVE_NAME = 'winnerLevel4.pkl'
-GENOME_LOAD_NAME = 'winnerLevel4.pkl'
+GENOME_SAVE_NAME = 'winnerVol1.pkl'
+GENOME_LOAD_NAME = 'winnerVol1.pkl'
 
-USING_CHECKPOINT = 1
-FILE_PREFIX = 'checkpoint-level4-'
-runFile = 'resume-level4'
+USING_CHECKPOINT = 0
+FILE_PREFIX = 'checkpoint-vol1-'
+runFile = 'starterPop'
 WORKER_NUM = 20
 DUMMY_SCREEN = 1
-GEN_RUN = 500
+GEN_RUN = 1000
 
 MENU_ACTIVE = 0 # for no agent
 FNAME = 'data/levels/fydo_1.tga'
