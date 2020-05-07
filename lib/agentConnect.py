@@ -248,6 +248,11 @@ def fitnessF(playerPos, levelName, bossHPIn=6):
                 fit = calculateFitness(calculateDistance(playerX, playerY, finish[0], finish[1]))
                 return fit+2
 
+        elif levelName == 'Jungle - 3' or levelName == 'tee_1.tga':
+            finish = (8,2)
+            fit = calculateFitness(calculateDistance(playerX, playerY, finish[0], finish[1]))
+            return fit*3
+
         elif levelName == 'Jungle - 4' or levelName == 'phil_2.tga':
             door1 = (41,6)
             door2 = (54,26)
@@ -286,6 +291,44 @@ def fitnessF(playerPos, levelName, bossHPIn=6):
                 fit = calculateFitness(calculateDistance(playerX, playerY, finish[0], finish[1]))
                 if fit < 0.01: fit = 0.01
                 return fit+2
+
+        elif levelName == 'Volcano - 2' or levelName == 'tim_1.tga':
+            door1 = (19,6)
+            finish = (26,8)
+            if playerX <= 24:
+                currentZone = 1
+            else:
+                currentZone = 2
+
+            if currentZone == 1:
+                fit = calculateFitness(calculateDistance(playerX, playerY, door1[0], door1[1]))
+                return fit
+            elif currentZone == 2:
+                fit = calculateFitness(calculateDistance(playerX, playerY, finish[0], finish[1]))
+                return fit+2
+
+        elif levelName == 'Volcano - 3' or levelName == 'pekuja_2.tga':
+            finish = (70,14)
+            if playerX > 42: zone = 4
+            elif playerX > 21:
+                if playerY >= 16:
+                    zone = 2
+                else: zone = 3
+            else:
+                if playerY >= 16:
+                    zone = 1
+                else: zone = 0
+            if zone == 4:
+                fit = calculateFitness(calculateDistance(playerX, playerY, finish[0], finish[1]))
+                return fit+2
+            elif zone == 0:
+                return 0
+            elif zone == 1:
+                return 0.5
+            elif zone == 2:
+                return 1
+            elif zone == 3:
+                return 1.5
 
         elif levelName == 'Moon - 1' or levelName == 'pekuja_1.tga':
             door1 = (29,70)
