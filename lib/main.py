@@ -32,16 +32,16 @@ global AGENT_ACTIVE
 global FNAME
 global WORKER_NUM
 
-AGENT_ACTIVE = 2 # 2 is using trained genome
+AGENT_ACTIVE = 1 # 2 is using trained genome
 GENOME_SAVE_NAME = 'winnerVol3.pkl'
 GENOME_LOAD_NAME = 'winnerVol3.pkl'
 
 USING_CHECKPOINT = 1
 FILE_PREFIX = 'checkpoint-vol3-'
-runFile = 'starterPop'
+runFile = 'last-vol3-990'
 WORKER_NUM = 20
-DUMMY_SCREEN = 0
-GEN_RUN = 1000
+DUMMY_SCREEN = 1
+GEN_RUN = 500
 
 MENU_ACTIVE = 0 # for no agent
 FNAME = 'data/levels/pekuja_2.tga'
