@@ -34,7 +34,7 @@ global WORKER_NUM
 
 AGENT_ACTIVE = 2 # 2 is using trained genome
 GENOME_SAVE_NAME = 'winnerLevel3.pkl'
-GENOME_LOAD_NAME = 'winnerLevel3.pkl'
+#GENOME_LOAD_NAME = 'winnerLevel3.pkl'
 
 USING_CHECKPOINT = 1
 FILE_PREFIX = 'checkpoint-level3-'
@@ -44,7 +44,24 @@ DUMMY_SCREEN = 0
 GEN_RUN = 500
 
 MENU_ACTIVE = 0 # for no agent
-FNAME = 'data/levels/tee_1.tga'
+
+SELECT_LEVEL = 'm3'
+LEVELS_PAIR = {
+    'j1':['data/levels/phil_1edited.tga','winnerLevel1.pkl'],
+    'j2':['data/levels/phil_7.tga','winnerLevel2.pkl'],
+    'j3':['data/levels/tee_1.tga','winnerLevel3.pkl'],
+    'j4':['data/levels/phil_2.tga','winnerLevel4.pkl'],
+    'v1':['data/levels/fydo_1.tga','winnerVol1.pkl'],
+    'v2':['data/levels/tim_1.tga','winnerVol2.pkl'],
+    'v3':['data/levels/pekuja_2.tga','winnerVol3.pkl'],
+    'm1':['data/levels/pekuja_1.tga','winnerMoon1.pkl'],
+    'm2':['data/levels/phil_5.tga','winnerMoon2.pkl'],
+    'm3':['data/levels/phil_9.tga','winnerMoon3.pkl'],
+    'b':['data/levels/boss_1.tga','winnerBoss.pkl'],
+    '0':['data/levels/test.tga','winnerLevel0.pkl']
+}
+FNAME = LEVELS_PAIR.get(SELECT_LEVEL)[0]
+GENOME_LOAD_NAME = LEVELS_PAIR.get(SELECT_LEVEL)[1]
 
 
 
