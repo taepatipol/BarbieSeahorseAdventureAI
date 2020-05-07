@@ -177,12 +177,15 @@ def calculateFitness(dist):
         fit = 1
     return fit
 
-def fitnessF(playerPos, levelName, bossHP=6):
+def fitnessF(playerPos, levelName, bossHPIn=6):
     if playerPos is None or not isinstance(playerPos, list) or len(playerPos) != 2:
         print "fitness function error: can not get player position"
         return 0
     else:
         fit = 0.1
+        if not isinstance(bossHPIn, int):
+            bossHP = 6
+        else: bossHP = bossHPIn
         # levelSwitcher = {
         #     'Jungle - 1':'jungle1',
         #     'Jungle - 2':'jungle2',
@@ -364,10 +367,10 @@ def fitnessF(playerPos, levelName, bossHP=6):
             if bossHP == 3:
                 if playerY >= 17:
                     fit = calculateFitness(calculateDistance(playerX, playerY, door[0], door[1]))
-                    fit += 3 + fit/2
+                    fit += 3 + fit
                 else:
                     fit = 3.99
-            return fit
+            return fit/2
 
 
     return fit

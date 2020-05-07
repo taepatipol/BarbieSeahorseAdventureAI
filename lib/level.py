@@ -414,14 +414,16 @@ class Level:
 
         if self.playerSprite != None:
             self.playerPos = [self.playerSprite.rect.centerx, self.playerSprite.rect.centery]
+        if self.bossSprite != None:
+            self.bossStrength = self.bossSprite.strength
+        else:
+            self.bossStrength = 6
         self.currentFitness = agentConnect.fitnessF(self.playerPos, self.title, self.bossStrength)
         if self.currentFitness > self.bestFitness:
             self.bestFitness = self.currentFitness
             self.notImproved = 0
         else:
             self.notImproved += 1
-        if self.bossSprite != None:
-            self.bossStrength = self.bossSprite.strength
 
 
         if self.currentFitness % 1 == 0:
