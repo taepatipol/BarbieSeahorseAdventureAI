@@ -32,7 +32,7 @@ global AGENT_ACTIVE
 global FNAME
 global WORKER_NUM
 
-AGENT_ACTIVE = 1 # 2 is using trained genome
+AGENT_ACTIVE = 2 # 2 is using trained genome
 GENOME_SAVE_NAME = 'winnerBoss.pkl'
 GENOME_LOAD_NAME = 'winnerBoss.pkl'
 
@@ -40,8 +40,8 @@ USING_CHECKPOINT = 1
 FILE_PREFIX = 'checkpoint-Boss-'
 runFile = 'last-Boss-488'
 WORKER_NUM = 20
-DUMMY_SCREEN = 1
-GEN_RUN = 200
+DUMMY_SCREEN = 0
+GEN_RUN = 1
 
 MENU_ACTIVE = 0 # for no agent
 FNAME = 'data/levels/boss_1.tga'
@@ -345,6 +345,7 @@ class Game(engine.Game):
                 if fitness is not None:
                     #print fitness
                     if fitness > bestFitness: bestFitness = fitness
+                    if AGENT_ACTIVE == 2: print fitness
                 if self.agentCon.getNotImprovedLoop() is not None and self.agentCon.getNotImprovedLoop() >= 1000:
                     break
                 if self.agentCon.isGameEnd:

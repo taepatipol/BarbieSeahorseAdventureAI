@@ -106,6 +106,7 @@ def loop(g,s):
 
 def hit(g,a,b):
     g.game.sfx['boss_explode'].play()
+    print 'hit'
     a.strength -= 1
     a.taking_damage = 60
     b.active = False

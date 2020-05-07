@@ -418,6 +418,7 @@ class Level:
             self.bossStrength = self.bossSprite.strength
         else:
             self.bossStrength = 6
+        print "bossHP:" + str(self.bossStrength)
         self.currentFitness = agentConnect.fitnessF(self.playerPos, self.title, self.bossStrength)
         if self.currentFitness > self.bestFitness:
             self.bestFitness = self.currentFitness
