@@ -38,10 +38,10 @@ GENOME_LOAD_NAME = 'winnerBoss.pkl'
 
 USING_CHECKPOINT = 0
 FILE_PREFIX = 'checkpoint-Boss-'
-runFile = 'starterPop'
+runFile = 'last-Boss-488'
 WORKER_NUM = 20
 DUMMY_SCREEN = 1
-GEN_RUN = 500
+GEN_RUN = 200
 
 MENU_ACTIVE = 0 # for no agent
 FNAME = 'data/levels/boss_1.tga'
