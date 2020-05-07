@@ -36,7 +36,7 @@ AGENT_ACTIVE = 1 # 2 is using trained genome
 GENOME_SAVE_NAME = 'winnerBoss.pkl'
 GENOME_LOAD_NAME = 'winnerBoss.pkl'
 
-USING_CHECKPOINT = 0
+USING_CHECKPOINT = 1
 FILE_PREFIX = 'checkpoint-Boss-'
 runFile = 'last-Boss-488'
 WORKER_NUM = 20
