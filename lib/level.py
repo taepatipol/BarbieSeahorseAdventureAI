@@ -423,7 +423,9 @@ class Level:
             self.bestFitness = self.currentFitness
             self.notImproved = 0
         else:
-            self.notImproved += 1
+            if self.title == "Boss" or self.title == "boss_1.tga":
+                self.notImproved += 0.5
+            else: self.notImproved += 1
 
 
         if self.currentFitness % 1 == 0:
