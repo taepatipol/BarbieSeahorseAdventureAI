@@ -38,7 +38,7 @@ GENOME_LOAD_NAME = 'winnerMoon2.pkl'
 
 USING_CHECKPOINT = 1
 FILE_PREFIX = 'checkpoint-Moon2-'
-runFile = 'starterPop'
+runFile = 'last-moon2-675'
 WORKER_NUM = 20
 DUMMY_SCREEN = 1
 GEN_RUN = 500
