@@ -32,11 +32,11 @@ global AGENT_ACTIVE
 global FNAME
 global WORKER_NUM
 
-AGENT_ACTIVE = 2 # 2 is using trained genome
+AGENT_ACTIVE = 1 # 2 is using trained genome
 GENOME_SAVE_NAME = 'winnerLevel3.pkl'
 #GENOME_LOAD_NAME = 'winnerLevel3.pkl'
 
-USING_CHECKPOINT = 1
+USING_CHECKPOINT = 0
 FILE_PREFIX = 'checkpoint-level3-'
 runFile = 'starterPop'
 WORKER_NUM = 20
@@ -45,7 +45,7 @@ GEN_RUN = 500
 
 MENU_ACTIVE = 0 # for no agent
 
-SELECT_LEVEL = 'm3'
+SELECT_LEVEL = 'j1h'
 LEVELS_PAIR = {
     'j1':['data/levels/phil_1edited.tga','winnerLevel1.pkl'],
     'j2':['data/levels/phil_7.tga','winnerLevel2.pkl'],
@@ -58,7 +58,8 @@ LEVELS_PAIR = {
     'm2':['data/levels/phil_5.tga','winnerMoon2.pkl'],
     'm3':['data/levels/phil_9.tga','winnerMoon3.pkl'],
     'b':['data/levels/boss_1.tga','winnerBoss.pkl'],
-    '0':['data/levels/test.tga','winnerLevel0.pkl']
+    '0':['data/levels/test.tga','winnerLevel0.pkl'],
+    'j1h':['data/levels/phil_1h.tga','winnerLevel1.pkl']
 }
 FNAME = LEVELS_PAIR.get(SELECT_LEVEL)[0]
 GENOME_LOAD_NAME = LEVELS_PAIR.get(SELECT_LEVEL)[1]
@@ -333,8 +334,8 @@ class Game(engine.Game):
             while not self.quit:
                 self.loop()  # MYNOTE here is the first mainloop
                 grid = self.agentCon.getScreen()
-                #if grid is not None:
-                    #print("----------------------------------\n" + "\r" + str(grid))
+                if grid is not None:
+                    print("----------------------------------\n" + "\r" + str(grid))
                 fitness = self.agentCon.getFitness()
                 if fitness is not None:
                     print fitness
@@ -368,7 +369,7 @@ class Game(engine.Game):
                     #print "a game ended"
                     break
 
-        #print bestFitness
+        print bestFitness
         return bestFitness
 
     def loop(self):
