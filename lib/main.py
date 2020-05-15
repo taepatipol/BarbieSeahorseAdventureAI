@@ -36,7 +36,7 @@ AGENT_ACTIVE = 1 # 2 is using trained genome
 GENOME_SAVE_NAME = 'winnerLevel1h.pkl'
 #GENOME_LOAD_NAME = 'winnerLevel3.pkl'
 
-USING_CHECKPOINT = 0
+USING_CHECKPOINT = 1
 FILE_PREFIX = 'checkpoint-level1h-'
 runFile = 'starterPop'
 WORKER_NUM = 20
