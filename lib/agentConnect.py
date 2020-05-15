@@ -202,7 +202,7 @@ def fitnessF(playerPos, levelName, bossHPIn=6):
         # }
         playerX = int(math.floor(playerPos[0] / TW))
         playerY = int(math.floor(playerPos[1] / TH))
-        if levelName == 'phil_1.tga' or levelName == 'test.tga' or levelName == 'phil_1edited.tga':
+        if levelName == 'phil_1.tga' or levelName == 'test.tga' or levelName == 'phil_1edited.tga' or levelName == 'phil_1h.tga':
             # specify zone
             currentZone = ''
             if playerY <= 32:
