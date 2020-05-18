@@ -38,7 +38,7 @@ GENOME_SAVE_NAME = 'winnerLevel1f.pkl'
 
 USING_CHECKPOINT = 1
 FILE_PREFIX = 'checkpoint-level1f-'
-runFile = 'checkpoint-level1h-498'
+runFile = 'last-level1f-994'
 WORKER_NUM = 20
 DUMMY_SCREEN = 1
 GEN_RUN = 500
