@@ -253,7 +253,7 @@ def fitnessF(playerPos, levelName, bossHPIn=6):
             fit = calculateFitness(calculateDistance(playerX, playerY, finish[0], finish[1]))
             return fit*3
 
-        elif levelName == 'Jungle - 4' or levelName == 'phil_2.tga':
+        elif levelName == 'Jungle - 4' or levelName == 'phil_2.tga' or levelName == 'phil_2h.tga':
             door1 = (41,6)
             door2 = (54,26)
             finish = (65,5)
