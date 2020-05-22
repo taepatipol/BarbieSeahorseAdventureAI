@@ -33,33 +33,34 @@ global FNAME
 global WORKER_NUM
 
 AGENT_ACTIVE = 1 # 2 is using trained genome
-GENOME_SAVE_NAME = 'winnerLevel1f.pkl'
+GENOME_SAVE_NAME = 'winnerLevel4h.pkl'
 #GENOME_LOAD_NAME = 'winnerLevel3.pkl'
 
 USING_CHECKPOINT = 1
-FILE_PREFIX = 'checkpoint-level1f-'
-runFile = 'last-level1f-1484'
-WORKER_NUM = 20
-DUMMY_SCREEN = 1
+FILE_PREFIX = 'checkpoint-level4h-'
+runFile = 'starterPop'
+WORKER_NUM = 5
+DUMMY_SCREEN = 0
 GEN_RUN = 500
 
 MENU_ACTIVE = 0 # for no agent
 
-SELECT_LEVEL = 'j1'
+SELECT_LEVEL = 'j4h'
 LEVELS_PAIR = {
-    'j1':['data/levels/phil_1edited.tga','winnerLevel1.pkl'],
+    'j1':['data/levels/phil_1edited.tga','winnerLevel1f.pkl'],
     'j2':['data/levels/phil_7.tga','winnerLevel2.pkl'],
     'j3':['data/levels/tee_1.tga','winnerLevel3.pkl'],
     'j4':['data/levels/phil_2.tga','winnerLevel4.pkl'],
     'v1':['data/levels/fydo_1.tga','winnerVol1.pkl'],
-    'v2':['data/levels/tim_1.tga','winnerVol2.pkl'],
+    'v2':['data/levels/tim_1.tga','winnerVol2.pkl'], #
     'v3':['data/levels/pekuja_2.tga','winnerVol3.pkl'],
     'm1':['data/levels/pekuja_1.tga','winnerMoon1.pkl'],
-    'm2':['data/levels/phil_5.tga','winnerMoon2.pkl'],
-    'm3':['data/levels/phil_9.tga','winnerMoon3.pkl'],
+    'm2':['data/levels/phil_5.tga','winnerMoon2.pkl'], #
+    'm3':['data/levels/phil_9.tga','winnerMoon3.pkl'], #
     'b':['data/levels/boss_1.tga','winnerBoss.pkl'],
     '0':['data/levels/test.tga','winnerLevel0.pkl'],
-    'j1h':['data/levels/phil_1h.tga','winnerLevel1h.pkl']
+    'j1h':['data/levels/phil_1h.tga','winnerLevel1h.pkl'],
+    'j4h':['data/levels/phil_2h.tga','winnerLevel4h.pkl']
 }
 FNAME = LEVELS_PAIR.get(SELECT_LEVEL)[0]
 GENOME_LOAD_NAME = LEVELS_PAIR.get(SELECT_LEVEL)[1]
