@@ -33,11 +33,11 @@ global FNAME
 global WORKER_NUM
 
 AGENT_ACTIVE = 1 # 2 is using trained genome
-GENOME_SAVE_NAME = 'winnerLevel4h.pkl'
+GENOME_SAVE_NAME = 'winnerLevel4h2.pkl'
 #GENOME_LOAD_NAME = 'winnerLevel3.pkl'
 
 USING_CHECKPOINT = 1
-FILE_PREFIX = 'checkpoint-level4h-'
+FILE_PREFIX = 'checkpoint-level4h2-'
 runFile = 'starterPop'
 WORKER_NUM = 20
 DUMMY_SCREEN = 1
@@ -45,7 +45,7 @@ GEN_RUN = 500
 
 MENU_ACTIVE = 0 # for no agent
 
-SELECT_LEVEL = 'j4h'
+SELECT_LEVEL = 'j4h2'
 LEVELS_PAIR = {
     'j1':['data/levels/phil_1edited.tga','winnerLevel1f.pkl'],
     'j2':['data/levels/phil_7.tga','winnerLevel2.pkl'],
@@ -60,7 +60,8 @@ LEVELS_PAIR = {
     'b':['data/levels/boss_1.tga','winnerBoss.pkl'],
     '0':['data/levels/test.tga','winnerLevel0.pkl'],
     'j1h':['data/levels/phil_1h.tga','winnerLevel1h.pkl'],
-    'j4h':['data/levels/phil_2h.tga','winnerLevel4h.pkl']
+    'j4h':['data/levels/phil_2h.tga','winnerLevel4h.pkl'],
+    'j4h2':['data/levels/phil_2h2.tga','winnerLevel4h2.pkl']
 }
 FNAME = LEVELS_PAIR.get(SELECT_LEVEL)[0]
 GENOME_LOAD_NAME = LEVELS_PAIR.get(SELECT_LEVEL)[1]
