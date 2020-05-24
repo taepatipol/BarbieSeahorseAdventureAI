@@ -1,5 +1,5 @@
 Bubble Kong
-===========
+============
 
 Entry in PyWeek #4  <http://www.pyweek.org/4/>
 Team: The Olde Battleaxe
