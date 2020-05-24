@@ -1,6 +1,6 @@
 This is an AI implementation of Barbie Seahorse Adventure game by The Olde Battleaxe.
 
-original version of game: http://www.imitationpickles.org/barbie/
+original version of game: http://www.imitationpickles.org/barbie/ (This game is not owned by me)
 
 This is my senior project of my 4th year in university.
 The AI is implemented by NEAT algorithm using NEAT-python.
